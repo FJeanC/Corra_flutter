@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "893959560123",
+    "project_id": "corra-app-flutter",
+    "storage_bucket": "corra-app-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893959560123:android:fa2052b7e6032e2084029e",
+        "android_client_info": {
+          "package_name": "com.CorraFlutter.corra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893959560123-bersb5lqrj6rtusq426ermk2pmslhoui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgkJOxPhycmi2Np-yXa8aBz8VOwoC3MzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893959560123-bersb5lqrj6rtusq426ermk2pmslhoui.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
