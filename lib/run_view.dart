@@ -25,7 +25,7 @@ class _RunViewState extends State<RunView> {
   GeolocatorPlatform locator = GeolocatorPlatform.instance;
   late Timer timer;
   int count = 0;
-  int countProCount = 3;
+  int countProCount = 5;
   final bool _isHours = true;
   late StopWatchTimer _stopWatchTimer;
   bool playButton = true;
@@ -59,17 +59,9 @@ class _RunViewState extends State<RunView> {
   void _onAccelerate(double speed) {
     locator.getCurrentPosition().then(
       (Position updatedPosition) {
-        _velocity = (speed + updatedPosition.speed) / 2;
-        calculateAverageSpeed(_velocity);
-        if (count - countProCount >= 0 && !playButton) {
-          velocidades.add((averageSpeed * (getTimeInMilli() / 3600000)));
-          final dist = velocidades.average;
-          developer.log(
-              'Distancia: ${dist.toStringAsFixed(2)}, last: ${velocidades.last.toStringAsFixed(2)}',
-              name: 'onAccelerate');
-          _distanceUpdatedStreamContoller.add(dist);
-          _velocityUpdatedStreamController.add(_velocity * 3.6);
-          count = 0;
+        if (!playButton) {
+          _velocity = (speed + updatedPosition.speed) / 2;
+          calculateAverageSpeed(_velocity);
         }
       },
     );
@@ -99,6 +91,16 @@ class _RunViewState extends State<RunView> {
         if (!playButton) {
           count++;
           print('Count: $count');
+          if (count - countProCount >= 0 && !playButton) {
+            velocidades.add(averageSpeed);
+            final dist = (velocidades.average) * (getTimeInMilli() / 3600000);
+            developer.log(
+                'Distancia: ${dist.toStringAsFixed(2)}, last: ${velocidades.last.toStringAsFixed(2)}',
+                name: 'onAccelerate');
+            _distanceUpdatedStreamContoller.add(dist);
+            _velocityUpdatedStreamController.add(_velocity * 3.6);
+            count = 0;
+          }
         }
       },
     );

@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:corra/cronometro_final.dart';
 import 'package:corra/run_view.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
