@@ -29,6 +29,7 @@ class CronometroView extends StatefulWidget {
 class _CronometroViewState extends State<CronometroView> {
   late StreamController<double?> _velocityUpdatedStreamController;
   late StreamController<double?> _distanceUpdatedStreamContoller;
+  late StreamController<double?> _paceUpdatedStreamController;
   double _velocity = 0;
   GeolocatorPlatform locator = GeolocatorPlatform.instance;
   late Timer timer;
@@ -82,11 +83,13 @@ class _CronometroViewState extends State<CronometroView> {
   void initState() {
     _velocityUpdatedStreamController = StreamController<double>();
     _distanceUpdatedStreamContoller = StreamController<double?>();
+    _paceUpdatedStreamController = StreamController<double?>();
     _stopWatchTimer = StopWatchTimer();
     _runsSerivce = FirebaseCloudRunStorage();
 
-    _velocityUpdatedStreamController.add(0);
-    _distanceUpdatedStreamContoller.add(0);
+    // _velocityUpdatedStreamController.add(0);
+    // _distanceUpdatedStreamContoller.add(0);
+    // _paceUpdatedStreamController.add(0);
     locator
         .getPositionStream(
           locationSettings: const LocationSettings(
@@ -111,6 +114,10 @@ class _CronometroViewState extends State<CronometroView> {
                 name: 'onAccelerate');
             _distanceUpdatedStreamContoller.add(dist);
             _velocityUpdatedStreamController.add(_velocity * 3.6);
+            double pace = (count / 60) / dist;
+            if (pace < 60.0) {
+              _paceUpdatedStreamController.add(pace);
+            }
           }
         }
       },
@@ -124,6 +131,7 @@ class _CronometroViewState extends State<CronometroView> {
     timer.cancel();
     _velocityUpdatedStreamController.close();
     _distanceUpdatedStreamContoller.close();
+    _paceUpdatedStreamController.close();
     await _stopWatchTimer.dispose();
   }
 
@@ -206,6 +214,18 @@ class _CronometroViewState extends State<CronometroView> {
                 print('I am here  ${snapshot.data!.toStringAsFixed(2)}');
               }
               return Text('Distancia: ${snapshot.data!.toStringAsFixed(2)}');
+            },
+          ),
+          StreamBuilder<double?>(
+            stream: _paceUpdatedStreamController.stream,
+            initialData: 0,
+            builder: (context, snapshot) {
+              if (!playButton) {
+                print('Pace ${snapshot.data}');
+                return Text(
+                    'Pace: ${snapshot.data!.toStringAsFixed(2)} min/km');
+              }
+              return const Text('Pace: 0 min/km');
             },
           ),
           CustumButton(
