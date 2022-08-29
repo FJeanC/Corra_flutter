@@ -1,3 +1,4 @@
+import 'package:corra/main_page.dart';
 import 'package:corra/views/runs/run_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +13,6 @@ import 'package:corra/views/login_view.dart';
 import 'package:corra/views/register_view.dart';
 import 'package:corra/views/verify_email_view.dart';
 import 'dart:async';
-import 'package:corra/cronometro_view.dart';
 import 'package:geolocator/geolocator.dart';
 
 Future<void> main() async {
@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
         child: const HomePage(),
       ),
       routes: {
-        listRuns: (context) => const RunView(),
+        mainPage: (context) => const MainPageView(),
       },
     );
   }
@@ -102,7 +102,7 @@ class HomePage extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
-          return const CronometroView();
+          return const MainPageView();
         } else if (state is AuthStateNeedsVerification) {
           return const VerifyEmailView();
         } else if (state is AuthStateLoggedOut) {
@@ -111,6 +111,8 @@ class HomePage extends StatelessWidget {
           return const RegisterView();
         } else if (state is AuthStateForgotPassword) {
           return const ForgotPasswordView();
+        } else if (state is AuthStateRunView) {
+          return const MainPageView();
         } else {
           return const Scaffold(
             body: CircularProgressIndicator(),

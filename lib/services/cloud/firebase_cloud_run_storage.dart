@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:corra/services/auth/auth_exceptions.dart';
 import 'package:corra/services/cloud/cloud_run.dart';
 import 'package:corra/services/cloud/cloud_storage_constants.dart';
+import 'package:corra/services/cloud/cloud_storage_exceptions.dart';
 
 class FirebaseCloudRunStorage {
   final runs = FirebaseFirestore.instance.collection('runs');
@@ -22,6 +24,14 @@ class FirebaseCloudRunStorage {
       dataFieldName: data,
     });
     print('Nota criada: $tempo, $ownerUserId');
+  }
+
+  Future<void> deleteRun({required String documentId}) async {
+    try {
+      await runs.doc(documentId).delete();
+    } catch (e) {
+      throw CouldNotDeleteRunException();
+    }
   }
 
   Stream<Iterable<CloudRun>> allRuns({required String ownerUserId}) {

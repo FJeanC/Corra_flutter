@@ -1,0 +1,1 @@
+class CouldNotDeleteRunException implements Exception {}

@@ -37,3 +37,7 @@ class AuthEventSForgotPassword extends AuthEvent {
   final String? email;
   const AuthEventSForgotPassword({this.email});
 }
+
+class AuthEventListRuns extends AuthEvent {
+  const AuthEventListRuns();
+}

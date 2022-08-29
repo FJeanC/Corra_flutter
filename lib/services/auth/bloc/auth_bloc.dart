@@ -162,5 +162,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ),
       );
     });
+
+    on<AuthEventListRuns>((event, emit) async {
+      emit(
+        const AuthStateRunView(isLoading: false),
+      );
+    });
   }
 }

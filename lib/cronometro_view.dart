@@ -103,7 +103,7 @@ class _CronometroViewState extends State<CronometroView> {
         if (!playButton) {
           count++;
           print('Count: $count');
-          if (count - countProCount >= 0 && !playButton) {
+          if (count % 3 == 0 && !playButton) {
             velocidades.add(averageSpeed);
             final dist = (velocidades.average) * (getTimeInMilli() / 3600000);
             developer.log(
@@ -111,7 +111,6 @@ class _CronometroViewState extends State<CronometroView> {
                 name: 'onAccelerate');
             _distanceUpdatedStreamContoller.add(dist);
             _velocityUpdatedStreamController.add(_velocity * 3.6);
-            count = 0;
           }
         }
       },
@@ -169,8 +168,6 @@ class _CronometroViewState extends State<CronometroView> {
               final value = snap.data;
               final displayTime =
                   StopWatchTimer.getDisplayTime(value!, hours: _isHours);
-              //List<String> aux = displayTime.split(':');
-              //print(aux);
               globalTime = displayTime;
 
               return Text(
@@ -242,8 +239,12 @@ class _CronometroViewState extends State<CronometroView> {
                 velocidade: (velocidades.average).toStringAsPrecision(2),
                 data: '26/08/2022',
               );
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  listRuns, ModalRoute.withName('/runs'));
+              if (!mounted) return;
+              // Navigator.of(context).pushNamedAndRemoveUntil(
+              //     mainPage, ModalRoute.withName('/runs'));
+              context.read<AuthBloc>().add(const AuthEventListRuns());
+
+              // Navigator.of(context).pop();
             },
             label: 'Save',
             icon: const Icon(Icons.stop),
