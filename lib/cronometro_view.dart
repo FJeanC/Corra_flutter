@@ -246,7 +246,7 @@ class _CronometroViewState extends State<CronometroView> {
                 : const Icon(Icons.pause),
           ),
           CustumButton(
-            color: Colors.pink,
+            color: Color.fromARGB(255, 0, 0, 0),
             onPress: () async {
               _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
               setState(() {
@@ -257,7 +257,7 @@ class _CronometroViewState extends State<CronometroView> {
                 ownerUserId: currentUser.id,
                 tempo: globalTime,
                 velocidade: (velocidades.average).toStringAsPrecision(2),
-                data: '26/08/2022',
+                data: DateTime.now().toString().substring(0, 10),
               );
               if (!mounted) return;
               // Navigator.of(context).pushNamedAndRemoveUntil(

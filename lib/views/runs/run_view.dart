@@ -69,11 +69,11 @@ class _RunViewState extends State<RunView> {
                 final allRuns = snapshot.data as Iterable<CloudRun>;
                 return RunListView(runs: allRuns);
               } else {
-                return const CircularProgressIndicator();
+                return const Center(child: CircularProgressIndicator());
               }
 
             default:
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
           }
         },
       ),
