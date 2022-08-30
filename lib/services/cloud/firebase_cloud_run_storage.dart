@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:corra/services/auth/auth_exceptions.dart';
 import 'package:corra/services/cloud/cloud_run.dart';
 import 'package:corra/services/cloud/cloud_storage_constants.dart';
 import 'package:corra/services/cloud/cloud_storage_exceptions.dart';

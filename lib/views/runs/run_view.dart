@@ -80,29 +80,3 @@ class _RunViewState extends State<RunView> {
     );
   }
 }
-
-
-
-// class RunListView extends StatelessWidget {
-//   const RunListView({
-//     Key? key,
-//     required this.runs,
-//   }) : super(key: key);
-//   final Iterable<CloudRun> runs;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Lista Corridas'),
-//         ),
-//         body: ListView.builder(
-//           itemCount: runs.length,
-//           itemBuilder: (context, index) {
-//             final run = runs.elementAt(index);
-//             return ListTile(
-//               title: Text(run.data + ' ' + run.tempo + ' ' + run.velocidade),
-//             );
-//           },
-//         ));
-//   }
-// }

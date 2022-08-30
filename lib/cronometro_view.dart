@@ -37,7 +37,7 @@ class _CronometroViewState extends State<CronometroView> {
   int countProCount = 5;
   final bool _isHours = true;
   late StopWatchTimer _stopWatchTimer;
-  bool playButton = true;
+  bool showPlayButton = true;
   late String globalTime;
   Queue<double> lastSpeed = Queue<double>();
   Queue<double> velocidades = Queue<double>();
@@ -71,7 +71,7 @@ class _CronometroViewState extends State<CronometroView> {
   void _onAccelerate(double speed) {
     locator.getCurrentPosition().then(
       (Position updatedPosition) {
-        if (!playButton) {
+        if (!showPlayButton) {
           _velocity = (speed + updatedPosition.speed) / 2;
           calculateAverageSpeed(_velocity);
         }
@@ -103,17 +103,21 @@ class _CronometroViewState extends State<CronometroView> {
     timer = Timer.periodic(
       const Duration(seconds: 1),
       (_) {
-        if (!playButton) {
+        if (!showPlayButton) {
           count++;
           print('Count: $count');
-          if (count % 3 == 0 && !playButton) {
+          if (count % 3 == 0 && !showPlayButton) {
             velocidades.add(averageSpeed);
             final dist = (velocidades.average) * (getTimeInMilli() / 3600000);
             developer.log(
                 'Distancia: ${dist.toStringAsFixed(2)}, last: ${velocidades.last.toStringAsFixed(2)}',
                 name: 'onAccelerate');
             _distanceUpdatedStreamContoller.add(dist);
-            _velocityUpdatedStreamController.add(_velocity * 3.6);
+            if (_velocity < 2) {
+              _velocityUpdatedStreamController.add(0);
+            } else {
+              _velocityUpdatedStreamController.add(_velocity * 3.6);
+            }
             double pace = (count / 60) / dist;
             if (pace < 60.0) {
               _paceUpdatedStreamController.add(pace);
@@ -132,6 +136,7 @@ class _CronometroViewState extends State<CronometroView> {
     _velocityUpdatedStreamController.close();
     _distanceUpdatedStreamContoller.close();
     _paceUpdatedStreamController.close();
+
     await _stopWatchTimer.dispose();
   }
 
@@ -209,7 +214,7 @@ class _CronometroViewState extends State<CronometroView> {
               // print('I am here  ${distance.toStringAsPrecision(3)}');
               // return Text('Distancia: ${distance.toStringAsPrecision(3)}');
 
-              if (!playButton) {
+              if (!showPlayButton) {
                 //distance += (snapshot.data!);
                 print('I am here  ${snapshot.data!.toStringAsFixed(2)}');
               }
@@ -220,28 +225,28 @@ class _CronometroViewState extends State<CronometroView> {
             stream: _paceUpdatedStreamController.stream,
             initialData: 0,
             builder: (context, snapshot) {
-              if (!playButton) {
+              if (!showPlayButton) {
                 print('Pace ${snapshot.data}');
                 return Text(
-                    'Pace: ${snapshot.data!.toStringAsFixed(2)} min/km');
+                    'Pace: ${snapshot.data!.toStringAsFixed(1)} min/km');
               }
-              return const Text('Pace: 0 min/km');
+              return const Text('Pace: 0.0 min/km');
             },
           ),
           CustumButton(
-            color: playButton ? Colors.green : Colors.red,
+            color: showPlayButton ? Colors.green : Colors.red,
             onPress: () {
-              if (playButton) {
+              if (showPlayButton) {
                 _stopWatchTimer.onExecute.add(StopWatchExecute.start);
               } else {
                 _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
               }
               setState(() {
-                playButton = !playButton;
+                showPlayButton = !showPlayButton;
               });
             },
             label: 'Start',
-            icon: playButton
+            icon: showPlayButton
                 ? const Icon(Icons.play_arrow)
                 : const Icon(Icons.pause),
           ),
@@ -250,13 +255,15 @@ class _CronometroViewState extends State<CronometroView> {
             onPress: () async {
               _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
               setState(() {
-                playButton = !playButton;
+                showPlayButton = !showPlayButton;
               });
               final currentUser = AuthService.firebase().currentUser!;
               await _runsSerivce.createNewRun(
                 ownerUserId: currentUser.id,
                 tempo: globalTime,
-                velocidade: (velocidades.average).toStringAsPrecision(2),
+                velocidade: velocidades.average > 2
+                    ? (velocidades.average).toStringAsPrecision(2)
+                    : '0',
                 data: DateTime.now().toString().substring(0, 10),
               );
               if (!mounted) return;
