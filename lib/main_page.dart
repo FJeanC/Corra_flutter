@@ -29,7 +29,7 @@ class _MainPageViewState extends State<MainPageView> {
           selectedIndex: index,
           destinations: const [
             NavigationDestination(
-              icon: Icon(Icons.email_outlined),
+              icon: Icon(Icons.home),
               label: 'ListRuns',
             ),
             NavigationDestination(
