@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:corra/services/auth/bloc/auth_bloc.dart';
 import 'package:corra/services/auth/bloc/auth_event.dart';
@@ -39,6 +36,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             _controller.clear();
             await showPasswordResetSendDialog(context);
           }
+          if (!mounted) return;
           if (state.exception != null) {
             await showErrorDialog(
               context,

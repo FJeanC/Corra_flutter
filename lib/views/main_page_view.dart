@@ -1,4 +1,4 @@
-import 'package:corra/cronometro_view.dart';
+import 'package:corra/views/cronometro/cronometro_view.dart';
 import 'package:corra/views/runs/run_view.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +25,9 @@ class _MainPageViewState extends State<MainPageView> {
           indicatorColor: Colors.blue.shade100,
         ),
         child: NavigationBar(
-          onDestinationSelected: (index) => setState(() => this.index = index),
+          onDestinationSelected: (index) => setState(() {
+            this.index = index;
+          }),
           selectedIndex: index,
           destinations: const [
             NavigationDestination(

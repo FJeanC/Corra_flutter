@@ -1,5 +1,5 @@
-import 'package:corra/main_page.dart';
-import 'package:corra/views/runs/run_view.dart';
+import 'package:corra/views/intervalada/intervalada_view.dart';
+import 'package:corra/views/main_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:corra/constants/routes.dart';
@@ -78,6 +78,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         mainPage: (context) => const MainPageView(),
+        intervaladaRoute: (context) => const IntervaladaView(),
       },
     );
   }

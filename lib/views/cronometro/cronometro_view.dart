@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-
 import 'package:corra/constants/routes.dart';
 import 'package:corra/enums/menu_action.dart';
 import 'package:corra/services/auth/auth_service.dart';
@@ -8,6 +7,7 @@ import 'package:corra/services/auth/bloc/auth_bloc.dart';
 import 'package:corra/services/auth/bloc/auth_event.dart';
 import 'package:corra/services/cloud/firebase_cloud_run_storage.dart';
 import 'package:corra/utilities/dialogs/logout_dialog.dart';
+import 'package:corra/views/intervalada/intervalada_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -16,8 +16,6 @@ import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 
 import 'dart:developer' as developer;
-
-// TODO: get raw time, convert all to mSec and use it to calculate the distance using the Queue.
 
 class CronometroView extends StatefulWidget {
   const CronometroView({Key? key}) : super(key: key);
@@ -45,6 +43,9 @@ class _CronometroViewState extends State<CronometroView> {
 
   // Firebase variables
   late final FirebaseCloudRunStorage _runsSerivce;
+
+  //Intervalada variables
+  final interObj = IntervaladaProvider();
 
   void calculateAverageSpeed(double velocity) {
     lastSpeed.add(_velocity * 3.6);
@@ -79,6 +80,11 @@ class _CronometroViewState extends State<CronometroView> {
     );
   }
 
+  void handleIntervalada() {
+    interObj.addTime = 1;
+    interObj.handleRepetion();
+  }
+
   @override
   void initState() {
     _velocityUpdatedStreamController = StreamController<double>();
@@ -105,7 +111,9 @@ class _CronometroViewState extends State<CronometroView> {
       (_) {
         if (!showPlayButton) {
           count++;
+          handleIntervalada();
           print('Count: $count');
+
           if (count % 3 == 0 && !showPlayButton) {
             velocidades.add(averageSpeed);
             final dist = (velocidades.average) * (getTimeInMilli() / 3600000);
@@ -153,7 +161,6 @@ class _CronometroViewState extends State<CronometroView> {
                   final shouldLogout = await showLogOutDialog(context);
                   if (shouldLogout) {
                     if (!mounted) {
-                      // Solving a warning
                       return;
                     }
                     context.read<AuthBloc>().add(const AuthEventLogOut());
@@ -251,7 +258,7 @@ class _CronometroViewState extends State<CronometroView> {
                 : const Icon(Icons.pause),
           ),
           CustumButton(
-            color: Color.fromARGB(255, 0, 0, 0),
+            color: const Color.fromARGB(255, 0, 0, 0),
             onPress: () async {
               _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
               setState(() {
@@ -275,6 +282,14 @@ class _CronometroViewState extends State<CronometroView> {
             },
             label: 'Save',
             icon: const Icon(Icons.stop),
+          ),
+          CustumButton(
+            color: const Color.fromARGB(255, 200, 180, 2),
+            onPress: () {
+              Navigator.of(context).pushNamed(intervaladaRoute);
+            },
+            label: 'Intervalada',
+            icon: const Icon(Icons.settings),
           ),
         ],
       ),
