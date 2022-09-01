@@ -34,8 +34,9 @@ class FirebaseCloudRunStorage {
   }
 
   Stream<Iterable<CloudRun>> allRuns({required String ownerUserId}) {
-    return runs.snapshots().map((event) => event.docs
-        .map((doc) => CloudRun.fromSnapshot(doc))
-        .where((run) => run.ownerUserId == ownerUserId));
+    return runs.orderBy('data', descending: true).snapshots().map((event) =>
+        event.docs
+            .map((doc) => CloudRun.fromSnapshot(doc))
+            .where((run) => run.ownerUserId == ownerUserId));
   }
 }
