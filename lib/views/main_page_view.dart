@@ -15,7 +15,6 @@ class _MainPageViewState extends State<MainPageView> {
     RunView(),
     CronometroView(),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
