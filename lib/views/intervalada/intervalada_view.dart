@@ -90,6 +90,7 @@ class _IntervaladaViewState extends State<IntervaladaView> {
                             r: int.parse(_repeat.text),
                             wT: int.parse(_walkTime.text),
                             rT: int.parse(_runTime.text),
+                            interval: userWantsIntervals,
                           );
                           Navigator.of(context).pop();
                         },

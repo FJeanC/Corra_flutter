@@ -12,6 +12,7 @@ class IntervaladaProvider {
   int _walkTime = 0;
   int _runTime = 0;
   int _holdTime = 0;
+  bool intervalsIsOn = false;
   final pattern = [0, 1000, 300, 1000];
 
   int get getRepeat => _repeat;
@@ -19,11 +20,17 @@ class IntervaladaProvider {
     _holdTime += value;
   }
 
-  void initializeIntervalada({required int r, required int wT, required rT}) {
+  bool get userWantsInterval => intervalsIsOn;
+  void initializeIntervalada(
+      {required int r,
+      required int wT,
+      required int rT,
+      required bool interval}) {
     _repeat = r;
     _walkTime = wT;
     _runTime = rT;
     _holdTime = 0;
+    intervalsIsOn = interval;
     print(_repeat);
     print(_walkTime);
     print(_runTime);

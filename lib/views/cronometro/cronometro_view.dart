@@ -111,7 +111,9 @@ class _CronometroViewState extends State<CronometroView> {
       (_) {
         if (!showPlayButton) {
           count++;
-          handleIntervalada();
+          if (interObj.userWantsInterval) {
+            handleIntervalada();
+          }
           print('Count: $count');
 
           if (count % 3 == 0 && !showPlayButton) {
