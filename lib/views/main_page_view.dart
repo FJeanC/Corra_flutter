@@ -10,14 +10,23 @@ class MainPageView extends StatefulWidget {
 }
 
 class _MainPageViewState extends State<MainPageView> {
-  final screens = const [
-    RunView(),
-    CronometroView(),
-  ];
   int index = 0;
 
   @override
   Widget build(BuildContext context) {
+    void navCallBack() {
+      setState(() {
+        index = 0;
+      });
+    }
+
+    final screens = [
+      const RunView(),
+      CronometroView(
+        onSaveChangeNavBar: navCallBack,
+      ),
+    ];
+
     return Scaffold(
       body: screens[index],
       bottomNavigationBar: NavigationBarTheme(

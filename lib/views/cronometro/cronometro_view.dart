@@ -18,7 +18,9 @@ import 'package:intl/intl.dart';
 import 'dart:developer' as developer;
 
 class CronometroView extends StatefulWidget {
-  const CronometroView({Key? key}) : super(key: key);
+  final VoidCallback onSaveChangeNavBar;
+  const CronometroView({Key? key, required this.onSaveChangeNavBar})
+      : super(key: key);
 
   @override
   State<CronometroView> createState() => _CronometroViewState();
@@ -288,11 +290,7 @@ class _CronometroViewState extends State<CronometroView> {
                         : '0'),
                 data: DateTime.now().toString().substring(0, 10),
               );
-              if (!mounted) return;
-              // Navigator.of(context).pushNamedAndRemoveUntil(
-              //     mainPage, ModalRoute.withName('/runs'));
-              //context.read<AuthBloc>().add(const AuthEventListRuns());
-              // Navigator.of(context).pop();
+              widget.onSaveChangeNavBar();
             },
             label: 'Save',
             icon: const Icon(Icons.stop),
