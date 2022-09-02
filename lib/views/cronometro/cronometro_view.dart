@@ -40,7 +40,7 @@ class _CronometroViewState extends State<CronometroView> {
   Queue<double> lastSpeed = Queue<double>();
   Queue<double> velocidades = Queue<double>();
   double averageSpeed = 0;
-
+  double pace = 0;
   // Firebase variables
   late final FirebaseCloudRunStorage _runsSerivce;
 
@@ -84,6 +84,12 @@ class _CronometroViewState extends State<CronometroView> {
   void handleIntervalada() {
     interObj.addTime = 1;
     interObj.handleRepetion();
+    if (interObj.getRepeat == 0) {
+      setState(() {
+        showPlayButton = !showPlayButton;
+        _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
+      });
+    }
   }
 
   @override
@@ -130,9 +136,12 @@ class _CronometroViewState extends State<CronometroView> {
             } else {
               _velocityUpdatedStreamController.add(_velocity * 3.6);
             }
-            double pace = (count / 60) / dist;
+            double auxpace = (count / 60) / dist;
             if (pace < 60.0) {
-              _paceUpdatedStreamController.add(pace);
+              //_paceUpdatedStreamController.add(pace);
+              setState(() {
+                pace = auxpace;
+              });
             }
           }
         }
@@ -229,18 +238,19 @@ class _CronometroViewState extends State<CronometroView> {
               return Text('Distancia: ${snapshot.data!.toStringAsFixed(2)}');
             },
           ),
-          StreamBuilder<double?>(
-            stream: _paceUpdatedStreamController.stream,
-            initialData: 0,
-            builder: (context, snapshot) {
-              if (!showPlayButton) {
-                print('Pace ${snapshot.data}');
-                return Text(
-                    'Pace: ${snapshot.data!.toStringAsFixed(1)} min/km');
-              }
-              return const Text('Pace: 0.0 min/km');
-            },
-          ),
+          Text('Pace: ${pace.toStringAsFixed(2)}'),
+          // StreamBuilder<double?>(
+          //   stream: _paceUpdatedStreamController.stream,
+          //   initialData: 0,
+          //   builder: (context, snapshot) {
+          //     if (!showPlayButton) {
+          //       print('Pace ${snapshot.data}');
+          //       return Text(
+          //           'Pace: ${snapshot.data!.toStringAsFixed(1)} min/km');
+          //     }
+          //     return const Text('Pace: 0.0 min/km');
+          //   },
+          // ),
           CustumButton(
             color: showPlayButton ? Colors.green : Colors.red,
             onPress: () {
@@ -261,17 +271,21 @@ class _CronometroViewState extends State<CronometroView> {
           CustumButton(
             color: const Color.fromARGB(255, 0, 0, 0),
             onPress: () async {
-              _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
-              setState(() {
-                showPlayButton = !showPlayButton;
-              });
+              if (!showPlayButton) {
+                _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
+                setState(() {
+                  showPlayButton = !showPlayButton;
+                });
+              }
               final currentUser = AuthService.firebase().currentUser!;
               await _runsSerivce.createNewRun(
                 ownerUserId: currentUser.id,
                 tempo: globalTime,
-                velocidade: velocidades.average > 2
-                    ? (velocidades.average).toStringAsPrecision(2)
-                    : '0',
+                velocidade: velocidades.isEmpty
+                    ? '0'
+                    : (velocidades.average > 2
+                        ? (velocidades.average).toStringAsPrecision(2)
+                        : '0'),
                 data: DateTime.now().toString().substring(0, 10),
               );
               if (!mounted) return;
