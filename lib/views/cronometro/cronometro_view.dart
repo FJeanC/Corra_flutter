@@ -74,6 +74,7 @@ class _CronometroViewState extends State<CronometroView> {
       (Position updatedPosition) {
         if (!showPlayButton) {
           _velocity = (speed + updatedPosition.speed) / 2;
+          print('VELOCITY HERE: ${_velocity.toStringAsFixed(2)}');
           calculateAverageSpeed(_velocity);
         }
       },
@@ -123,7 +124,8 @@ class _CronometroViewState extends State<CronometroView> {
                 'Distancia: ${dist.toStringAsFixed(2)}, last: ${velocidades.last.toStringAsFixed(2)}',
                 name: 'onAccelerate');
             _distanceUpdatedStreamContoller.add(dist);
-            if (_velocity < 2) {
+            if (_velocity * 3.6 < 2) {
+              print('Im here');
               _velocityUpdatedStreamController.add(0);
             } else {
               _velocityUpdatedStreamController.add(_velocity * 3.6);
