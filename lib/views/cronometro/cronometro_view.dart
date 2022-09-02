@@ -220,9 +220,6 @@ class _CronometroViewState extends State<CronometroView> {
             stream: _distanceUpdatedStreamContoller.stream,
             initialData: 0.0,
             builder: (context, snapshot) {
-              // print('I am here  ${distance.toStringAsPrecision(3)}');
-              // return Text('Distancia: ${distance.toStringAsPrecision(3)}');
-
               if (!showPlayButton) {
                 //distance += (snapshot.data!);
                 print('I am here  ${snapshot.data!.toStringAsFixed(2)}');
@@ -278,8 +275,7 @@ class _CronometroViewState extends State<CronometroView> {
               if (!mounted) return;
               // Navigator.of(context).pushNamedAndRemoveUntil(
               //     mainPage, ModalRoute.withName('/runs'));
-              context.read<AuthBloc>().add(const AuthEventListRuns());
-
+              //context.read<AuthBloc>().add(const AuthEventListRuns());
               // Navigator.of(context).pop();
             },
             label: 'Save',

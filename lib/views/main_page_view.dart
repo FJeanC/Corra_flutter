@@ -10,11 +10,12 @@ class MainPageView extends StatefulWidget {
 }
 
 class _MainPageViewState extends State<MainPageView> {
-  int index = 0;
   final screens = const [
     RunView(),
     CronometroView(),
   ];
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

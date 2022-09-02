@@ -1,6 +1,8 @@
 import 'package:corra/services/cloud/cloud_run.dart';
+import 'package:corra/services/cloud/cloud_storage_exceptions.dart';
 import 'package:corra/services/cloud/firebase_cloud_run_storage.dart';
 import 'package:corra/utilities/dialogs/delete_dialog.dart';
+import 'package:corra/utilities/dialogs/error_dialog.dart';
 import 'package:corra/views/runs/run_detail_fragment.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +25,12 @@ class RunListView extends StatelessWidget {
           onLongPress: () async {
             final shouldDelete = await showDeleteDialog(context);
             if (shouldDelete) {
-              await _runsService.deleteRun(documentId: run.documentId);
+              try {
+                await _runsService.deleteRun(documentId: run.documentId);
+              } on CouldNotDeleteRunException {
+                // ignore: use_build_context_synchronously
+                await showErrorDialog(context, 'Could not delete run');
+              }
             }
           },
           onTap: () async {

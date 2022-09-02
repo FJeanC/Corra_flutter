@@ -34,6 +34,7 @@ class FirebaseCloudRunStorage {
   }
 
   Stream<Iterable<CloudRun>> allRuns({required String ownerUserId}) {
+    print('I was called');
     return runs.orderBy('data', descending: true).snapshots().map((event) =>
         event.docs
             .map((doc) => CloudRun.fromSnapshot(doc))
