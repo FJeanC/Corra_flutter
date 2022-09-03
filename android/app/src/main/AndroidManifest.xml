@@ -2,6 +2,8 @@
     package="com.CorraFlutter.corra">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
         <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        <uses-permission android:name="TextToSpeech.Engine.INTENT_ACTION_TTS_SERVICE" /> 
+        
    <application
         android:label="corra"
         android:name="${applicationName}"

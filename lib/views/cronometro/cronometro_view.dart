@@ -7,6 +7,7 @@ import 'package:corra/services/auth/bloc/auth_bloc.dart';
 import 'package:corra/services/auth/bloc/auth_event.dart';
 import 'package:corra/services/cloud/firebase_cloud_run_storage.dart';
 import 'package:corra/utilities/dialogs/logout_dialog.dart';
+import 'package:corra/utilities/textToSpeech/text_to_speech.dart';
 import 'package:corra/views/intervalada/intervalada_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +49,10 @@ class _CronometroViewState extends State<CronometroView> {
 
   //Intervalada variables
   final interObj = IntervaladaProvider();
+
+  //TTS variables
+  var _ttsObj = TTS();
+  double auxTTS = 0.2;
 
   void calculateAverageSpeed(double velocity) {
     lastSpeed.add(_velocity * 3.6);
@@ -144,6 +149,12 @@ class _CronometroViewState extends State<CronometroView> {
               setState(() {
                 pace = auxpace;
               });
+            }
+
+            if (dist >= auxTTS) {
+              print('SHOULD SPEAK');
+              _ttsObj.speak();
+              auxTTS += 0.2;
             }
           }
         }

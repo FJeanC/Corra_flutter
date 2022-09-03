@@ -11,7 +11,11 @@ class RunDetailView extends StatelessWidget {
         title: const Text('Detail view'),
       ),
       body: Column(
-        children: [Text(run.data), Text(run.velocidade), Text(run.tempo)],
+        children: [
+          Text(run.data),
+          Text(run.velocidade),
+          Text(run.tempo),
+        ],
       ),
     );
   }
