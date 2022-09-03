@@ -51,8 +51,8 @@ class _CronometroViewState extends State<CronometroView> {
   final interObj = IntervaladaProvider();
 
   //TTS variables
-  var _ttsObj = TTS();
-  double auxTTS = 0.2;
+  final _ttsObj = TTS();
+  double auxTTS = 1;
 
   void calculateAverageSpeed(double velocity) {
     lastSpeed.add(_velocity * 3.6);
@@ -154,7 +154,7 @@ class _CronometroViewState extends State<CronometroView> {
             if (dist >= auxTTS) {
               print('SHOULD SPEAK');
               _ttsObj.speak();
-              auxTTS += 0.2;
+              auxTTS += 1;
             }
           }
         }

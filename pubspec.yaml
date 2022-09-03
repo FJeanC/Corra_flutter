@@ -52,6 +52,7 @@ dependencies:
   equatable: ^2.0.3
   vibration: ^1.7.6
   flutter_tts: ^3.5.1
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:
