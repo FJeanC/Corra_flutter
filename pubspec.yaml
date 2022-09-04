@@ -53,6 +53,7 @@ dependencies:
   vibration: ^1.7.6
   flutter_tts: ^3.5.1
   image_picker: ^0.8.5+3
+  firebase_storage: ^10.3.7
 
 dev_dependencies:
   flutter_test:
