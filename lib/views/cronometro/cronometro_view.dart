@@ -192,6 +192,9 @@ class _CronometroViewState extends State<CronometroView> {
                     context.read<AuthBloc>().add(const AuthEventLogOut());
                   }
                   break;
+                case MenuAction.save:
+                  // TODO: Handle this case.
+                  break;
               }
             },
             itemBuilder: (context) {

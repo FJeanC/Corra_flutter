@@ -46,6 +46,9 @@ class _RunViewState extends State<RunView> {
                     context.read<AuthBloc>().add(const AuthEventLogOut());
                   }
                   break;
+                case MenuAction.save:
+                  // TODO: Handle this case.
+                  break;
               }
             },
             itemBuilder: (context) {
