@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:corra/utilities/dialogs/generic_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<bool> showLogOutDialog(BuildContext context) {
   return showGenericDialog(
     context: context,
-    title: 'Log out',
-    content: 'Are you sure you want to log out?',
+    title: AppLocalizations.of(context)!.logout,
+    content: AppLocalizations.of(context)!.sureLogout,
     optionsBuilder: () => {
-      'Cancel': false,
-      'Log out': true,
+      AppLocalizations.of(context)!.cancel: false,
+      AppLocalizations.of(context)!.logout: true,
     },
   ).then(
     (value) =>

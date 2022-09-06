@@ -1,12 +1,11 @@
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:corra/enums/menu_action.dart';
 import 'package:corra/services/cloud/cloud_run.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RunDetailView extends StatefulWidget {
   const RunDetailView({Key? key}) : super(key: key);
@@ -104,7 +103,7 @@ class _RunDetailViewState extends State<RunDetailView> {
     bool flag = false;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail view'),
+        title: Text(AppLocalizations.of(context)!.detailView),
         actions: [
           PopupMenuButton<MenuAction>(onSelected: (value) async {
             switch (value) {
@@ -119,10 +118,10 @@ class _RunDetailViewState extends State<RunDetailView> {
                 break;
             }
           }, itemBuilder: (context) {
-            return const [
+            return [
               PopupMenuItem<MenuAction>(
                 value: MenuAction.save,
-                child: Text('Save'),
+                child: Text(AppLocalizations.of(context)!.save),
               ),
             ];
           })
@@ -135,7 +134,7 @@ class _RunDetailViewState extends State<RunDetailView> {
           Text(run.tempo),
           ElevatedButton(
             onPressed: pickImage,
-            child: const Text('Take a picture'),
+            child: Text(AppLocalizations.of(context)!.takePic),
           ),
           FutureBuilder<String>(
             future: imageAlreadyExists(run),

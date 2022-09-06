@@ -1,7 +1,9 @@
 import 'dart:io' show Platform;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TTS {
   late final FlutterTts tts;
@@ -16,8 +18,8 @@ class TTS {
     await tts.setVolume(1.0);
   }
 
-  Future<void> speak() async {
+  Future<void> speak(BuildContext context) async {
     await tts.setLanguage(Platform.localeName);
-    await tts.speak("You've ran one kilometer");
+    await tts.speak(AppLocalizations.of(context)!.ttsPhrase);
   }
 }

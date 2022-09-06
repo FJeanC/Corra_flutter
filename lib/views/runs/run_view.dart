@@ -9,6 +9,7 @@ import 'package:corra/services/auth/bloc/auth_bloc.dart';
 import 'package:corra/services/auth/bloc/auth_event.dart';
 
 import 'package:corra/utilities/dialogs/logout_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RunView extends StatefulWidget {
   const RunView({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _RunViewState extends State<RunView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Runs'),
+        title: Text(AppLocalizations.of(context)!.yourRuns),
         actions: [
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
@@ -52,10 +53,10 @@ class _RunViewState extends State<RunView> {
               }
             },
             itemBuilder: (context) {
-              return const [
+              return [
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
-                  child: Text('Log out'),
+                  child: Text(AppLocalizations.of(context)!.logout),
                 ),
               ];
             },

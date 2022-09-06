@@ -5,6 +5,7 @@ import 'package:corra/services/auth/bloc/auth_bloc.dart';
 import 'package:corra/services/auth/bloc/auth_event.dart';
 import 'package:corra/services/auth/bloc/auth_state.dart';
 import 'package:corra/utilities/dialogs/error_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -38,18 +39,20 @@ class _LoginViewState extends State<LoginView> {
           if (state.exception is UserNotFoundAuthException) {
             await showErrorDialog(
               context,
-              'Cannot find a user with the entered credentials',
+              AppLocalizations.of(context)!.cannotFindUser,
             );
           } else if (state.exception is WrongPasswordAuthException) {
-            await showErrorDialog(context, 'Wrong credentials');
+            await showErrorDialog(
+                context, AppLocalizations.of(context)!.wrongCredentials);
           } else if (state.exception is GenericAuthException) {
-            await showErrorDialog(context, 'Authentication error');
+            await showErrorDialog(
+                context, AppLocalizations.of(context)!.authenticationError);
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Login'),
+          title: Text(AppLocalizations.of(context)!.login),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -60,8 +63,8 @@ class _LoginViewState extends State<LoginView> {
                 enableSuggestions: false,
                 autocorrect: false,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your email here',
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.enterEmail,
                 ),
               ),
               TextField(
@@ -69,8 +72,8 @@ class _LoginViewState extends State<LoginView> {
                 obscureText: true,
                 enableSuggestions: false,
                 autocorrect: false,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your password here',
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.enterPassword,
                 ),
               ),
               TextButton(
@@ -84,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       );
                 },
-                child: const Text('Login'),
+                child: Text(AppLocalizations.of(context)!.login),
               ),
               TextButton(
                 onPressed: () {
@@ -92,7 +95,7 @@ class _LoginViewState extends State<LoginView> {
                         const AuthEventSForgotPassword(),
                       );
                 },
-                child: const Text('Forgot password?'),
+                child: Text(AppLocalizations.of(context)!.forgotPassword),
               ),
               TextButton(
                 onPressed: () {
@@ -100,7 +103,7 @@ class _LoginViewState extends State<LoginView> {
                         const AuthEventShouldRegister(),
                       );
                 },
-                child: const Text('Not register yet? Register here'),
+                child: Text(AppLocalizations.of(context)!.notRegisterYet),
               )
             ],
           ),

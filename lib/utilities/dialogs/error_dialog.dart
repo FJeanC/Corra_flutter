@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:corra/utilities/dialogs/generic_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> showErrorDialog(
   BuildContext context,
@@ -7,7 +8,7 @@ Future<void> showErrorDialog(
 ) {
   return showGenericDialog<void>(
     context: context,
-    title: 'An error ocurred',
+    title: AppLocalizations.of(context)!.errorOcurred,
     content: text,
     optionsBuilder: () => {
       'OK': null,

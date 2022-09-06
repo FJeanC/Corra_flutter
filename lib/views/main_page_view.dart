@@ -1,6 +1,7 @@
 import 'package:corra/views/cronometro/cronometro_view.dart';
 import 'package:corra/views/runs/run_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPageView extends StatefulWidget {
   const MainPageView({Key? key}) : super(key: key);
@@ -38,14 +39,14 @@ class _MainPageViewState extends State<MainPageView> {
             this.index = index;
           }),
           selectedIndex: index,
-          destinations: const [
+          destinations: [
             NavigationDestination(
-              icon: Icon(Icons.home),
-              label: 'ListRuns',
+              icon: const Icon(Icons.home),
+              label: AppLocalizations.of(context)!.listRun,
             ),
             NavigationDestination(
-              icon: Icon(Icons.timer),
-              label: 'Cronometro',
+              icon: const Icon(Icons.timer),
+              label: AppLocalizations.of(context)!.timer,
             ),
           ],
         ),

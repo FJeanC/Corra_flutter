@@ -15,7 +15,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:developer' as developer;
 
 class CronometroView extends StatefulWidget {
@@ -153,7 +153,7 @@ class _CronometroViewState extends State<CronometroView> {
 
             if (dist >= auxTTS) {
               print('SHOULD SPEAK');
-              _ttsObj.speak();
+              _ttsObj.speak(context);
               auxTTS += 1;
             }
           }
@@ -178,7 +178,7 @@ class _CronometroViewState extends State<CronometroView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Run'),
+        title: Text(AppLocalizations.of(context)!.run),
         actions: [
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
@@ -198,10 +198,10 @@ class _CronometroViewState extends State<CronometroView> {
               }
             },
             itemBuilder: (context) {
-              return const [
+              return [
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
-                  child: Text('Log out'),
+                  child: Text(AppLocalizations.of(context)!.logout),
                 ),
               ];
             },
@@ -209,64 +209,95 @@ class _CronometroViewState extends State<CronometroView> {
         ],
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          StreamBuilder<int>(
-            stream: _stopWatchTimer.rawTime,
-            initialData: 0,
-            builder: (context, snap) {
-              final value = snap.data;
-              final displayTime =
-                  StopWatchTimer.getDisplayTime(value!, hours: _isHours);
-              globalTime = displayTime;
-
-              return Text(
-                displayTime,
-                style:
-                    const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-              );
-            },
+          Padding(
+            padding: const EdgeInsets.all(32),
+            child: Row(
+              children: [
+                StreamBuilder<int>(
+                  stream: _stopWatchTimer.rawTime,
+                  initialData: 0,
+                  builder: (context, snap) {
+                    final value = snap.data;
+                    final displayTime =
+                        StopWatchTimer.getDisplayTime(value!, hours: _isHours);
+                    globalTime = displayTime;
+                    return Text(
+                      displayTime,
+                      style: const TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                StreamBuilder<double?>(
+                  stream: _distanceUpdatedStreamContoller.stream,
+                  initialData: 0.0,
+                  builder: (context, snapshot) {
+                    if (!showPlayButton) {
+                      //distance += (snapshot.data!);
+                      print('I am here  ${snapshot.data!.toStringAsFixed(2)}');
+                    }
+                    return Text(
+                      'Dist: ${snapshot.data!.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 30,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-          StreamBuilder<double?>(
-            stream: _velocityUpdatedStreamController.stream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                print((snapshot.data!).toStringAsPrecision(2));
-                return Text(
-                  '${(snapshot.data!).toStringAsPrecision(2)} KM/H',
-                  style: const TextStyle(fontSize: 40),
-                );
-              } else {
-                return Text(
-                  '${(_velocity).toStringAsPrecision(2)} KM/H',
-                  style: const TextStyle(fontSize: 40),
-                );
-              }
-            },
+          Padding(
+            padding: const EdgeInsets.all(32),
+            child: Row(
+              children: [
+                StreamBuilder<double?>(
+                  stream: _velocityUpdatedStreamController.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      print((snapshot.data!).toStringAsPrecision(2));
+                      return Text(
+                        '${(snapshot.data!).toStringAsPrecision(2)} KM/H',
+                        style: const TextStyle(fontSize: 30),
+                      );
+                    } else {
+                      return Text(
+                        '${(_velocity).toStringAsPrecision(2)} KM/H',
+                        style: const TextStyle(fontSize: 30),
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(
+                  width: 50,
+                ),
+                Text(
+                  'Pace: ${pace.toStringAsFixed(2)}',
+                  style: const TextStyle(
+                    fontSize: 30,
+                  ),
+                ),
+              ],
+            ),
           ),
-          StreamBuilder<double?>(
-            stream: _distanceUpdatedStreamContoller.stream,
-            initialData: 0.0,
-            builder: (context, snapshot) {
-              if (!showPlayButton) {
-                //distance += (snapshot.data!);
-                print('I am here  ${snapshot.data!.toStringAsFixed(2)}');
-              }
-              return Text('Distancia: ${snapshot.data!.toStringAsFixed(2)}');
-            },
+          Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(color: Color.fromARGB(255, 0, 123, 255)),
+                bottom: BorderSide(color: Color.fromARGB(255, 0, 64, 255)),
+              ),
+            ),
+            child: Text(
+              AppLocalizations.of(context)!.interval,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Color(0xFF000000), fontSize: 40),
+            ),
           ),
-          Text('Pace: ${pace.toStringAsFixed(2)}'),
-          // StreamBuilder<double?>(
-          //   stream: _paceUpdatedStreamController.stream,
-          //   initialData: 0,
-          //   builder: (context, snapshot) {
-          //     if (!showPlayButton) {
-          //       print('Pace ${snapshot.data}');
-          //       return Text(
-          //           'Pace: ${snapshot.data!.toStringAsFixed(1)} min/km');
-          //     }
-          //     return const Text('Pace: 0.0 min/km');
-          //   },
-          // ),
           CustumButton(
             color: showPlayButton ? Colors.green : Colors.red,
             onPress: () {
@@ -283,6 +314,22 @@ class _CronometroViewState extends State<CronometroView> {
             icon: showPlayButton
                 ? const Icon(Icons.play_arrow)
                 : const Icon(Icons.pause),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 32),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CustumButton(
+                  color: const Color.fromARGB(255, 235, 212, 0),
+                  onPress: () {
+                    Navigator.of(context).pushNamed(intervaladaRoute);
+                  },
+                  label: 'Intervalada',
+                  icon: const Icon(Icons.settings),
+                ),
+              ],
+            ),
           ),
           CustumButton(
             color: const Color.fromARGB(255, 0, 0, 0),
@@ -304,18 +351,11 @@ class _CronometroViewState extends State<CronometroView> {
                         : '0'),
                 data: DateTime.now().toString().substring(0, 10),
               );
+              // Callback para mudar o view para a run list view
               widget.onSaveChangeNavBar();
             },
             label: 'Save',
             icon: const Icon(Icons.stop),
-          ),
-          CustumButton(
-            color: const Color.fromARGB(255, 200, 180, 2),
-            onPress: () {
-              Navigator.of(context).pushNamed(intervaladaRoute);
-            },
-            label: 'Intervalada',
-            icon: const Icon(Icons.settings),
           ),
         ],
       ),
@@ -350,3 +390,18 @@ class CustumButton extends StatelessWidget {
     );
   }
 }
+
+
+
+          // StreamBuilder<double?>(
+          //   stream: _paceUpdatedStreamController.stream,
+          //   initialData: 0,
+          //   builder: (context, snapshot) {
+          //     if (!showPlayButton) {
+          //       print('Pace ${snapshot.data}');
+          //       return Text(
+          //           'Pace: ${snapshot.data!.toStringAsFixed(1)} min/km');
+          //     }
+          //     return const Text('Pace: 0.0 min/km');
+          //   },
+          // ),

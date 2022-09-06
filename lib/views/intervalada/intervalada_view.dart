@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:corra/views/intervalada/intervalada_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class IntervaladaView extends StatefulWidget {
   const IntervaladaView({Key? key}) : super(key: key);
@@ -34,13 +35,15 @@ class _IntervaladaViewState extends State<IntervaladaView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Intervalada'),
+          title: Text(AppLocalizations.of(context)!.intevals),
         ),
         body: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(
             children: [
-              const Center(child: Text('Ativar Intervalda')),
+              Center(
+                child: Text(AppLocalizations.of(context)!.activateIntervals),
+              ),
               Switch(
                 value: userWantsIntervals,
                 activeColor: Colors.red,
@@ -54,8 +57,8 @@ class _IntervaladaViewState extends State<IntervaladaView> {
                       enableSuggestions: false,
                       autocorrect: false,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter walk time',
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.enterWalkTime,
                       ),
                     )
                   : Container(),
@@ -65,8 +68,8 @@ class _IntervaladaViewState extends State<IntervaladaView> {
                       enableSuggestions: false,
                       autocorrect: false,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter run time',
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.enterRunTime,
                       ),
                     )
                   : Container(),
@@ -76,8 +79,8 @@ class _IntervaladaViewState extends State<IntervaladaView> {
                       enableSuggestions: false,
                       autocorrect: false,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter repeat',
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.enterRepeat,
                       ),
                     )
                   : Container(),
@@ -94,7 +97,7 @@ class _IntervaladaViewState extends State<IntervaladaView> {
                           );
                           Navigator.of(context).pop();
                         },
-                        child: const Text('Save'),
+                        child: Text(AppLocalizations.of(context)!.save),
                       ),
                     )
                   : Container(),

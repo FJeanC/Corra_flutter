@@ -5,6 +5,7 @@ import 'package:corra/utilities/dialogs/delete_dialog.dart';
 import 'package:corra/utilities/dialogs/error_dialog.dart';
 import 'package:corra/views/runs/run_detail_fragment.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RunListView extends StatelessWidget {
   RunListView({
@@ -29,7 +30,8 @@ class RunListView extends StatelessWidget {
                 await _runsService.deleteRun(documentId: run.documentId);
               } on CouldNotDeleteRunException {
                 // ignore: use_build_context_synchronously
-                await showErrorDialog(context, 'Could not delete run');
+                await showErrorDialog(
+                    context, AppLocalizations.of(context)!.couldNotDeleteRun);
               }
             }
           },
@@ -50,7 +52,8 @@ class RunListView extends StatelessWidget {
             softWrap: true,
             overflow: TextOverflow.ellipsis,
           ),
-          subtitle: Text('Duration: ${run.tempo}'),
+          subtitle:
+              Text('${AppLocalizations.of(context)!.duration}: ${run.tempo}'),
         );
       },
     );

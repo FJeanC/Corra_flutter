@@ -14,6 +14,8 @@ import 'package:corra/views/register_view.dart';
 import 'package:corra/views/verify_email_view.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   // Placeholder Splash Screen Material App.
@@ -80,6 +82,16 @@ class MyApp extends StatelessWidget {
         mainPage: (context) => const MainPageView(),
         intervaladaRoute: (context) => const IntervaladaView(),
       },
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'),
+        Locale('pt', 'BR'),
+      ],
     );
   }
 }
@@ -95,7 +107,7 @@ class HomePage extends StatelessWidget {
         if (state.isLoading) {
           LoadingScreen().show(
             context: context,
-            text: state.loadingText ?? 'Please wait a moment',
+            text: state.loadingText ?? AppLocalizations.of(context)!.wait,
           );
         } else {
           LoadingScreen().hide();

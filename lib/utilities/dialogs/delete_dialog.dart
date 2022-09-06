@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:corra/utilities/dialogs/generic_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<bool> showDeleteDialog(BuildContext context) {
   return showGenericDialog(
     context: context,
-    title: 'Delete',
-    content: 'Are you sure you want to delete this item?',
+    title: AppLocalizations.of(context)!.delete,
+    content: AppLocalizations.of(context)!.deleteItem,
     optionsBuilder: () => {
-      'Cancel': false,
-      'Yes': true,
+      AppLocalizations.of(context)!.cancel: false,
+      AppLocalizations.of(context)!.yes: true,
     },
   ).then(
     (value) =>
