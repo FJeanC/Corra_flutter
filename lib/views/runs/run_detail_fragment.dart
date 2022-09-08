@@ -42,6 +42,7 @@ class _RunDetailViewState extends State<RunDetailView> {
       final pathToSave = 'runs_image/${run.documentId}';
       final ref = FirebaseStorage.instance.ref().child(pathToSave);
       final result = await ref.getDownloadURL();
+      print("IM not being called");
       return result;
     } on FirebaseException catch (e) {
       print('HERE I AM ou ${e.code} and ${e.message}');
@@ -58,53 +59,19 @@ class _RunDetailViewState extends State<RunDetailView> {
       setState(() {
         fileImage = imageTemporary;
       });
-
-      buildProgess();
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
   }
 
-  Widget buildProgess() {
-    return StreamBuilder<TaskSnapshot>(
-      stream: uploadTask?.snapshotEvents,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final data = snapshot.data!;
-          double progress = data.bytesTransferred / data.totalBytes;
-          return SizedBox(
-            height: 30,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                LinearProgressIndicator(
-                  value: progress,
-                  backgroundColor: Colors.grey,
-                  color: Colors.green,
-                ),
-                Center(
-                  child: Text(
-                    '${(100 * progress).roundToDouble()}%',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                )
-              ],
-            ),
-          );
-        }
-        return const CircularProgressIndicator();
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final run = ModalRoute.of(context)!.settings.arguments as CloudRun;
-    bool flag = false;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.detailView),
         actions: [
+          IconButton(onPressed: pickImage, icon: const Icon(Icons.camera)),
           PopupMenuButton<MenuAction>(onSelected: (value) async {
             switch (value) {
               case MenuAction.logout:
@@ -129,40 +96,59 @@ class _RunDetailViewState extends State<RunDetailView> {
       ),
       body: Column(
         children: [
-          Text(run.data),
-          Text(run.velocidade),
-          Text(run.tempo),
-          ElevatedButton(
-            onPressed: pickImage,
-            child: Text(AppLocalizations.of(context)!.takePic),
-          ),
-          FutureBuilder<String>(
-            future: imageAlreadyExists(run),
-            builder: ((context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.done:
-                  if (snapshot.data! != 'object-not-found') {
-                    print('AQUI');
-                    flag = true;
-                    return buildImage(snapshot.data!);
-                  } else {
-                    return Container();
-                  }
-                default:
-                  return const CircularProgressIndicator();
-              }
-            }),
-          ),
-          if (fileImage != null && !flag)
-            Expanded(
-              child: Container(
-                color: Colors.blue[100],
-                child: Image.file(File(fileImage!.path),
-                    width: double.infinity, fit: BoxFit.cover),
-              ),
-            ),
+          // ElevatedButton(
+          //   onPressed: pickImage,
+          //   child: Text(AppLocalizations.of(context)!.takePic),
+          // ),
+          Expanded(child: buildRunInfo(run)),
+          Expanded(child: buildCompleteImage(run))
         ],
       ),
+    );
+  }
+
+  Widget buildCompleteImage(CloudRun run) {
+    if (fileImage != null) {
+      return buildImageInMemory();
+    }
+    return FutureBuilder<String>(
+      future: imageAlreadyExists(run),
+      builder: ((context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            if (snapshot.data! != 'object-not-found') {
+              print('AQUI');
+              //flag = true;
+              return buildImage(snapshot.data!);
+            } else {
+              print("Hello darksness");
+              return Image.asset('assets/images/Shoe.png');
+            }
+          default:
+            return const Center(child: CircularProgressIndicator());
+        }
+      }),
+    );
+  }
+
+  Widget buildImageInMemory() {
+    return Container(
+      color: Colors.blue[100],
+      child: Image.file(
+        File(fileImage!.path),
+        width: double.infinity,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Widget buildRunInfo(CloudRun run) {
+    return Column(
+      children: [
+        Text(run.data),
+        Text(run.velocidade),
+        Text(run.tempo),
+      ],
     );
   }
 
@@ -171,6 +157,20 @@ class _RunDetailViewState extends State<RunDetailView> {
       child: Image.network(
         documentName,
         fit: BoxFit.cover,
+        width: double.infinity,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) {
+            return child;
+          }
+          return Center(
+            child: CircularProgressIndicator(
+              value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded /
+                      loadingProgress.expectedTotalBytes!
+                  : null,
+            ),
+          );
+        },
       ),
     );
   }

@@ -144,7 +144,7 @@ class _CronometroViewState extends State<CronometroView> {
               _velocityUpdatedStreamController.add(_velocity * 3.6);
             }
             double auxpace = (count / 60) / dist;
-            if (pace < 60.0) {
+            if (auxpace < 60.0) {
               //_paceUpdatedStreamController.add(pace);
               setState(() {
                 pace = auxpace;
