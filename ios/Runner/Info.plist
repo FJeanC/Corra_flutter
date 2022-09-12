@@ -45,5 +45,23 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!--Location stuff-->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Need location when in use</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Always and when in use!</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Older devices need location.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Can I have location always?</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+    	<string>en</string>
+    	<string>pt</string>
+	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App needs access to photo lib for run images</string>
+	<key>NSCameraUsageDescription</key>
+	<string>To capture run photos please grant camera access</string>
 </dict>
 </plist>
