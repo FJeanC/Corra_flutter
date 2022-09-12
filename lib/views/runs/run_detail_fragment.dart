@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class RunDetailView extends StatefulWidget {
   const RunDetailView({Key? key}) : super(key: key);
@@ -133,7 +134,8 @@ class _RunDetailViewState extends State<RunDetailView> {
 
   Widget buildImageInMemory() {
     return Container(
-      color: Colors.blue[100],
+      //color: Colors.blue[100],
+      decoration: BoxDecoration(border: Border.all(width: 7)),
       child: Image.file(
         File(fileImage!.path),
         width: double.infinity,
@@ -143,35 +145,130 @@ class _RunDetailViewState extends State<RunDetailView> {
   }
 
   Widget buildRunInfo(CloudRun run) {
+    final distancia = (double.parse(run.velocidade) *
+        ((getTimeInMilli(run.tempo) / 3600000)));
+    double pace = 1 / (double.parse(run.velocidade) / 60);
+    print("I AM PACE!!!! $pace");
+    if (pace < 60 || pace == double.infinity) {
+      pace = 0.0;
+    }
+    print('dividido por: ${getTimeInMilli(run.tempo) / 3600000}');
+    print('Run.velocidade ${run.velocidade}');
+    print('GetMili: ${getTimeInMilli(run.tempo)}');
+    print('Distancia: $distancia');
     return Column(
       children: [
-        Text(run.data),
-        Text(run.velocidade),
-        Text(run.tempo),
+        const Padding(
+          padding: EdgeInsets.only(top: 32, bottom: 10),
+          child: Text(
+            'Run From',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(bottom: 15),
+          child: Text(
+            run.data.substring(0, 10),
+            style: const TextStyle(fontSize: 20),
+          ),
+        ),
+        CustomPaint(
+          child: Container(
+            width: 250,
+            height: 130,
+            color: const Color.fromARGB(255, 60, 234, 253),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const Text(
+                    'Distance',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      '${distancia.toStringAsFixed(2)} KM',
+                      style: const TextStyle(
+                          fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Text(
+                    run.tempo,
+                    style: const TextStyle(fontSize: 20),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(25),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                children: [
+                  const Text(
+                    'Pace',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  Text(
+                    '${pace.toStringAsFixed(2)}',
+                    style: TextStyle(fontSize: 18),
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  const Text(
+                    'Start Time',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  Text(
+                    run.data.substring(11, 19),
+                    style: const TextStyle(fontSize: 18),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
 
   Widget buildImage(String documentName) {
     return Center(
-      child: Image.network(
-        documentName,
-        fit: BoxFit.cover,
-        width: double.infinity,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          }
-          return Center(
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded /
-                      loadingProgress.expectedTotalBytes!
-                  : null,
-            ),
-          );
-        },
+      child: Container(
+        decoration: BoxDecoration(border: Border.all(width: 7)),
+        child: Image.network(
+          documentName,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) {
+              return child;
+            }
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            );
+          },
+        ),
       ),
     );
+  }
+
+  int getTimeInMilli(String globalTime) {
+    final timeStr = globalTime;
+    final format = DateFormat('HH:mm:ss.S');
+    final dt = format.parse(timeStr, true);
+    print('MILLIE: ${dt.millisecondsSinceEpoch}');
+    return dt.millisecondsSinceEpoch;
   }
 }

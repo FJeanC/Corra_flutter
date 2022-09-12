@@ -18,42 +18,54 @@ class RunListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int count = runs.length + 1;
     return ListView.builder(
       itemCount: runs.length,
       itemBuilder: (context, index) {
         final run = runs.elementAt(index);
-        return ListTile(
-          onLongPress: () async {
-            final shouldDelete = await showDeleteDialog(context);
-            if (shouldDelete) {
-              try {
-                await _runsService.deleteRun(documentId: run.documentId);
-              } on CouldNotDeleteRunException {
-                // ignore: use_build_context_synchronously
-                await showErrorDialog(
-                    context, AppLocalizations.of(context)!.couldNotDeleteRun);
-              }
-            }
-          },
-          onTap: () async {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const RunDetailView(),
-                settings: RouteSettings(
-                  arguments: run,
-                ),
+        count--;
+        return Card(
+          elevation: 1,
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: const Color.fromARGB(255, 102, 200, 217),
+              child: Text(
+                '$count',
+                style: const TextStyle(color: Colors.black),
               ),
-            );
-          },
-          title: Text(
-            run.data,
-            maxLines: 1,
-            softWrap: true,
-            overflow: TextOverflow.ellipsis,
+            ),
+            onLongPress: () async {
+              final shouldDelete = await showDeleteDialog(context);
+              if (shouldDelete) {
+                try {
+                  await _runsService.deleteRun(documentId: run.documentId);
+                } on CouldNotDeleteRunException {
+                  // ignore: use_build_context_synchronously
+                  await showErrorDialog(
+                      context, AppLocalizations.of(context)!.couldNotDeleteRun);
+                }
+              }
+            },
+            onTap: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const RunDetailView(),
+                  settings: RouteSettings(
+                    arguments: run,
+                  ),
+                ),
+              );
+            },
+            title: Text(
+              run.data.substring(0, 10),
+              maxLines: 1,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle:
+                Text('${AppLocalizations.of(context)!.duration}: ${run.tempo}'),
           ),
-          subtitle:
-              Text('${AppLocalizations.of(context)!.duration}: ${run.tempo}'),
         );
       },
     );

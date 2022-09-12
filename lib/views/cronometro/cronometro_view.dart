@@ -349,8 +349,10 @@ class _CronometroViewState extends State<CronometroView> {
                     : (velocidades.average > 2
                         ? (velocidades.average).toStringAsPrecision(2)
                         : '0'),
-                data: DateTime.now().toString().substring(0, 10),
+                data: DateTime.now()
+                    .toString(), // 0 - 10 é a data  12 a 19 horario
               );
+              print(DateTime.now().toString());
               // Callback para mudar o view para a run list view
               widget.onSaveChangeNavBar();
             },
