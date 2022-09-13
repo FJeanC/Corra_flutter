@@ -5,9 +5,9 @@
         <uses-permission android:name="TextToSpeech.Engine.INTENT_ACTION_TTS_SERVICE" /> 
         
    <application
-        android:label="corra"
+        android:label="Corra"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
         
             android:name=".MainActivity"
