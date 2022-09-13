@@ -215,39 +215,41 @@ class _CronometroViewState extends State<CronometroView> {
             padding: const EdgeInsets.all(32),
             child: Row(
               children: [
-                StreamBuilder<int>(
-                  stream: _stopWatchTimer.rawTime,
-                  initialData: 0,
-                  builder: (context, snap) {
-                    final value = snap.data;
-                    final displayTime =
-                        StopWatchTimer.getDisplayTime(value!, hours: _isHours);
-                    globalTime = displayTime;
-                    return Text(
-                      displayTime,
-                      style: const TextStyle(
-                          fontSize: 30, fontWeight: FontWeight.bold),
-                    );
-                  },
+                Expanded(
+                  child: StreamBuilder<int>(
+                    stream: _stopWatchTimer.rawTime,
+                    initialData: 0,
+                    builder: (context, snap) {
+                      final value = snap.data;
+                      final displayTime = StopWatchTimer.getDisplayTime(value!,
+                          hours: _isHours);
+                      globalTime = displayTime;
+                      return Text(
+                        displayTime,
+                        style: const TextStyle(
+                            fontSize: 27, fontWeight: FontWeight.bold),
+                      );
+                    },
+                  ),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
-                StreamBuilder<double?>(
-                  stream: _distanceUpdatedStreamContoller.stream,
-                  initialData: 0.0,
-                  builder: (context, snapshot) {
-                    if (!showPlayButton) {
-                      //distance += (snapshot.data!);
-                      print('I am here  ${snapshot.data!.toStringAsFixed(2)}');
-                    }
-                    return Text(
-                      'Dist: ${snapshot.data!.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontSize: 30,
-                      ),
-                    );
-                  },
+                Expanded(
+                  child: StreamBuilder<double?>(
+                    stream: _distanceUpdatedStreamContoller.stream,
+                    initialData: 0.0,
+                    builder: (context, snapshot) {
+                      if (!showPlayButton) {
+                        //distance += (snapshot.data!);
+                        print(
+                            'I am here  ${snapshot.data!.toStringAsFixed(2)}');
+                      }
+                      return Text(
+                        'Dist: ${snapshot.data!.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 27,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -256,30 +258,34 @@ class _CronometroViewState extends State<CronometroView> {
             padding: const EdgeInsets.all(32),
             child: Row(
               children: [
-                StreamBuilder<double?>(
-                  stream: _velocityUpdatedStreamController.stream,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      print((snapshot.data!).toStringAsPrecision(2));
-                      return Text(
-                        '${(snapshot.data!).toStringAsPrecision(2)} KM/H',
-                        style: const TextStyle(fontSize: 30),
-                      );
-                    } else {
-                      return Text(
-                        '${(_velocity).toStringAsPrecision(2)} KM/H',
-                        style: const TextStyle(fontSize: 30),
-                      );
-                    }
-                  },
+                Expanded(
+                  child: StreamBuilder<double?>(
+                    stream: _velocityUpdatedStreamController.stream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        print((snapshot.data!).toStringAsPrecision(2));
+                        return Text(
+                          '${(snapshot.data!).toStringAsPrecision(2)} KM/H',
+                          style: const TextStyle(fontSize: 27),
+                        );
+                      } else {
+                        return Text(
+                          '${(_velocity).toStringAsPrecision(2)} KM/H',
+                          style: const TextStyle(fontSize: 27),
+                        );
+                      }
+                    },
+                  ),
                 ),
-                const SizedBox(
-                  width: 50,
-                ),
-                Text(
-                  'Pace: ${pace.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontSize: 30,
+                // const SizedBox(
+                //   width: 50,
+                // ),
+                Expanded(
+                  child: Text(
+                    'Pace: ${pace.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      fontSize: 27,
+                    ),
                   ),
                 ),
               ],

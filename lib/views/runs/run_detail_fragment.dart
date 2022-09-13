@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:corra/enums/menu_action.dart';
 import 'package:corra/services/cloud/cloud_run.dart';
+import 'package:corra/utilities/dialogs/error_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,24 +19,25 @@ class RunDetailView extends StatefulWidget {
 class _RunDetailViewState extends State<RunDetailView> {
   File? fileImage;
   UploadTask? uploadTask;
-
+  bool showSaveButton = false;
   Future<void> uploadFile(CloudRun run) async {
-    // final String newPath =
-    //     path.join(path.dirname(fileImage!.path), run.documentId);
-    final pathToSave = 'runs_image/${run.documentId}';
-    final fileToUpload = (File(fileImage!.path));
-
-    final ref = FirebaseStorage.instance.ref().child(pathToSave);
-
-    setState(() {
-      uploadTask = ref.putFile(fileToUpload);
-    });
-    final snap = await uploadTask!.whenComplete(() => {});
-    final urlDownload = await snap.ref.getDownloadURL();
-    print('DonwloadLink: $urlDownload');
-    setState(() {
-      uploadTask = null;
-    });
+    try {
+      final pathToSave = 'runs_image/${run.documentId}';
+      final fileToUpload = (File(fileImage!.path));
+      final ref = FirebaseStorage.instance.ref().child(pathToSave);
+      setState(() {
+        uploadTask = ref.putFile(fileToUpload);
+      });
+      final snap = await uploadTask!.whenComplete(() => {});
+      final urlDownload = await snap.ref.getDownloadURL();
+      print('DonwloadLink: $urlDownload');
+      setState(() {
+        uploadTask = null;
+      });
+    } on Exception catch (_) {
+      print("I am an exception");
+      showErrorDialog(context, "Couldn't save image");
+    }
   }
 
   Future<String> imageAlreadyExists(CloudRun run) async {
@@ -73,34 +75,32 @@ class _RunDetailViewState extends State<RunDetailView> {
         title: Text(AppLocalizations.of(context)!.detailView),
         actions: [
           IconButton(onPressed: pickImage, icon: const Icon(Icons.camera)),
-          PopupMenuButton<MenuAction>(onSelected: (value) async {
-            switch (value) {
-              case MenuAction.logout:
-                break;
-              case MenuAction.save:
-                try {
-                  await uploadFile(run);
-                } on Exception {
-                  print('ERRRO');
-                }
-                break;
-            }
-          }, itemBuilder: (context) {
-            return [
-              PopupMenuItem<MenuAction>(
-                value: MenuAction.save,
-                child: Text(AppLocalizations.of(context)!.save),
-              ),
-            ];
-          })
+          IconButton(
+              onPressed: () => uploadFile(run), icon: const Icon(Icons.save)),
+          // PopupMenuButton<MenuAction>(onSelected: (value) async {
+          //   switch (value) {
+          //     case MenuAction.logout:
+          //       break;
+          //     case MenuAction.save:
+          //       try {
+          // await uploadFile(run);
+          //       } on Exception {
+          //         print('ERRRO');
+          //       }
+          //       break;
+          //   }
+          // }, itemBuilder: (context) {
+          //   return [
+          //     PopupMenuItem<MenuAction>(
+          //       value: MenuAction.save,
+          //       child: Text(AppLocalizations.of(context)!.save),
+          //     ),
+          //   ];
+          // })
         ],
       ),
       body: Column(
         children: [
-          // ElevatedButton(
-          //   onPressed: pickImage,
-          //   child: Text(AppLocalizations.of(context)!.takePic),
-          // ),
           Expanded(child: buildRunInfo(run)),
           Expanded(child: buildCompleteImage(run))
         ],
@@ -133,8 +133,11 @@ class _RunDetailViewState extends State<RunDetailView> {
   }
 
   Widget buildImageInMemory() {
+    setState(() {
+      showSaveButton = true;
+      print("Show save : $showSaveButton");
+    });
     return Container(
-      //color: Colors.blue[100],
       decoration: BoxDecoration(border: Border.all(width: 7)),
       child: Image.file(
         File(fileImage!.path),
@@ -174,8 +177,8 @@ class _RunDetailViewState extends State<RunDetailView> {
         ),
         CustomPaint(
           child: Container(
-            width: 250,
-            height: 130,
+            // width: 250,
+            // height: 130,
             color: const Color.fromARGB(255, 60, 234, 253),
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -214,8 +217,8 @@ class _RunDetailViewState extends State<RunDetailView> {
                     style: TextStyle(fontSize: 25),
                   ),
                   Text(
-                    '${pace.toStringAsFixed(2)}',
-                    style: TextStyle(fontSize: 18),
+                    pace.toStringAsFixed(2),
+                    style: const TextStyle(fontSize: 18),
                   )
                 ],
               ),

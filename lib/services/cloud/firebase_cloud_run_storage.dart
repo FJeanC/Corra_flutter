@@ -34,7 +34,7 @@ class FirebaseCloudRunStorage {
     }
     try {
       final ref =
-          FirebaseStorage.instance.ref().child('runs_image/${documentId}');
+          FirebaseStorage.instance.ref().child('runs_image/$documentId');
       await ref.delete();
     } catch (e) {
       print('Maybe ');
