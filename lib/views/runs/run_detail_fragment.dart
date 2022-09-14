@@ -219,7 +219,7 @@ class _RunDetailViewState extends State<RunDetailView> {
                 children: [
                   const Text(
                     'Pace',
-                    style: TextStyle(fontSize: 25),
+                    style: TextStyle(fontSize: 24),
                   ),
                   Text(
                     pace.toStringAsFixed(2),
@@ -231,7 +231,7 @@ class _RunDetailViewState extends State<RunDetailView> {
                 children: [
                   const Text(
                     'Start Time',
-                    style: TextStyle(fontSize: 25),
+                    style: TextStyle(fontSize: 24),
                   ),
                   Text(
                     run.data.substring(11, 19),
