@@ -138,7 +138,7 @@ class _RunDetailViewState extends State<RunDetailView> {
       print("Show save : $showSaveButton");
     });
     return Container(
-      decoration: BoxDecoration(border: Border.all(width: 7)),
+      decoration: BoxDecoration(border: Border.all(width: 4)),
       child: Image.file(
         File(fileImage!.path),
         width: double.infinity,
@@ -155,6 +155,10 @@ class _RunDetailViewState extends State<RunDetailView> {
     if (pace < 60 || pace == double.infinity) {
       pace = 0.0;
     }
+
+    bool isHeightLarge = MediaQuery.of(context).size.height >= 810;
+    print('Is height large? $isHeightLarge');
+
     print('dividido por: ${getTimeInMilli(run.tempo) / 3600000}');
     print('Run.velocidade ${run.velocidade}');
     print('GetMili: ${getTimeInMilli(run.tempo)}');
@@ -182,7 +186,8 @@ class _RunDetailViewState extends State<RunDetailView> {
             color: const Color.fromARGB(255, 60, 234, 253),
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Column(
+              child: Flex(
+                direction: isHeightLarge ? Axis.vertical : Axis.horizontal,
                 children: [
                   const Text(
                     'Distance',
@@ -244,7 +249,7 @@ class _RunDetailViewState extends State<RunDetailView> {
   Widget buildImage(String documentName) {
     return Center(
       child: Container(
-        decoration: BoxDecoration(border: Border.all(width: 7)),
+        decoration: BoxDecoration(border: Border.all(width: 4)),
         child: Image.network(
           documentName,
           fit: BoxFit.cover,
@@ -275,3 +280,36 @@ class _RunDetailViewState extends State<RunDetailView> {
     return dt.millisecondsSinceEpoch;
   }
 }
+
+
+
+// CustomPaint(
+//           child: Container(
+//             // width: 250,
+//             // height: 130,
+//             color: const Color.fromARGB(255, 60, 234, 253),
+//             child: Padding(
+//               padding: const EdgeInsets.all(20),
+//               child: Column(
+//                 children: [
+//                   const Text(
+//                     'Distance',
+//                     style: TextStyle(fontSize: 15),
+//                   ),
+//                   Padding(
+//                     padding: const EdgeInsets.all(10),
+//                     child: Text(
+//                       '${distancia.toStringAsFixed(2)} KM',
+//                       style: const TextStyle(
+//                           fontSize: 25, fontWeight: FontWeight.bold),
+//                     ),
+//                   ),
+//                   Text(
+//                     run.tempo,
+//                     style: const TextStyle(fontSize: 20),
+//                   )
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
