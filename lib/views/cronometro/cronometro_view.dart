@@ -30,7 +30,6 @@ class CronometroView extends StatefulWidget {
 class _CronometroViewState extends State<CronometroView> {
   late StreamController<double?> _velocityUpdatedStreamController;
   late StreamController<double?> _distanceUpdatedStreamContoller;
-  late StreamController<double?> _paceUpdatedStreamController;
   double _velocity = 0;
   GeolocatorPlatform locator = GeolocatorPlatform.instance;
   late Timer timer;
@@ -111,7 +110,6 @@ class _CronometroViewState extends State<CronometroView> {
   void initState() {
     _velocityUpdatedStreamController = StreamController<double>();
     _distanceUpdatedStreamContoller = StreamController<double?>();
-    _paceUpdatedStreamController = StreamController<double?>();
     _stopWatchTimer = StopWatchTimer();
     _runsSerivce = FirebaseCloudRunStorage();
 
@@ -153,7 +151,6 @@ class _CronometroViewState extends State<CronometroView> {
             }
             double auxpace = (count / 60) / dist;
             if (auxpace < 60.0) {
-              //_paceUpdatedStreamController.add(pace);
               setState(() {
                 pace = auxpace;
               });
@@ -177,7 +174,6 @@ class _CronometroViewState extends State<CronometroView> {
     timer.cancel();
     _velocityUpdatedStreamController.close();
     _distanceUpdatedStreamContoller.close();
-    _paceUpdatedStreamController.close();
     interObj.resetInterval();
     await _stopWatchTimer.dispose();
   }
@@ -200,9 +196,6 @@ class _CronometroViewState extends State<CronometroView> {
                     context.read<AuthBloc>().add(const AuthEventLogOut());
                   }
                   break;
-                case MenuAction.save:
-                  // TODO: Handle this case.
-                  break;
               }
             },
             itemBuilder: (context) {
@@ -220,7 +213,7 @@ class _CronometroViewState extends State<CronometroView> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Padding(
-            padding: const EdgeInsets.all(32),
+            padding: const EdgeInsets.all(28),
             child: Row(
               children: [
                 Expanded(
@@ -263,7 +256,7 @@ class _CronometroViewState extends State<CronometroView> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(32),
+            padding: const EdgeInsets.all(28),
             child: Row(
               children: [
                 Expanded(

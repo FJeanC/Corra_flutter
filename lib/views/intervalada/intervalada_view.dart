@@ -103,6 +103,6 @@ class _IntervaladaViewState extends State<IntervaladaView> {
                   : Container(),
             ],
           ),
-        ));
+        ),);
   }
 }

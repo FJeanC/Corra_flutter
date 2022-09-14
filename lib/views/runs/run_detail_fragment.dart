@@ -77,26 +77,6 @@ class _RunDetailViewState extends State<RunDetailView> {
           IconButton(onPressed: pickImage, icon: const Icon(Icons.camera)),
           IconButton(
               onPressed: () => uploadFile(run), icon: const Icon(Icons.save)),
-          // PopupMenuButton<MenuAction>(onSelected: (value) async {
-          //   switch (value) {
-          //     case MenuAction.logout:
-          //       break;
-          //     case MenuAction.save:
-          //       try {
-          // await uploadFile(run);
-          //       } on Exception {
-          //         print('ERRRO');
-          //       }
-          //       break;
-          //   }
-          // }, itemBuilder: (context) {
-          //   return [
-          //     PopupMenuItem<MenuAction>(
-          //       value: MenuAction.save,
-          //       child: Text(AppLocalizations.of(context)!.save),
-          //     ),
-          //   ];
-          // })
         ],
       ),
       body: Column(
@@ -165,9 +145,9 @@ class _RunDetailViewState extends State<RunDetailView> {
     print('Distancia: $distancia');
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.only(top: 32, bottom: 10),
-          child: Text(
+        Padding(
+          padding: EdgeInsets.only(top: isHeightLarge ? 32 : 16, bottom: 10),
+          child: const Text(
             'Run From',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
           ),
@@ -211,7 +191,7 @@ class _RunDetailViewState extends State<RunDetailView> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(25),
+          padding: EdgeInsets.all(isHeightLarge ? 25 : 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
