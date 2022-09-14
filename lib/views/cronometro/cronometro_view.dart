@@ -49,7 +49,7 @@ class _CronometroViewState extends State<CronometroView> {
 
   //Intervalada variables
   final interObj = IntervaladaProvider();
-
+  String intervalNameType = 'Walking';
   //TTS variables
   final _ttsObj = TTS();
   double auxTTS = 1;
@@ -90,7 +90,15 @@ class _CronometroViewState extends State<CronometroView> {
 
   void handleIntervalada() {
     interObj.addTime = 1;
+    bool aux = interObj.intervalType;
     interObj.handleRepetion();
+
+    if (aux != interObj.intervalType) {
+      setState(() {
+        intervalNameType =
+            (intervalNameType == 'Walking') ? 'Running' : 'Walking';
+      });
+    }
     if (interObj.getRepeat == 0) {
       setState(() {
         showPlayButton = !showPlayButton;
@@ -170,7 +178,7 @@ class _CronometroViewState extends State<CronometroView> {
     _velocityUpdatedStreamController.close();
     _distanceUpdatedStreamContoller.close();
     _paceUpdatedStreamController.close();
-
+    interObj.resetInterval();
     await _stopWatchTimer.dispose();
   }
 
@@ -299,9 +307,10 @@ class _CronometroViewState extends State<CronometroView> {
               ),
             ),
             child: Text(
-              AppLocalizations.of(context)!.interval,
+              '${AppLocalizations.of(context)!.interval}: $intervalNameType',
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Color(0xFF000000), fontSize: 40),
+              style: const TextStyle(
+                  color: Color.fromARGB(255, 28, 17, 17), fontSize: 40),
             ),
           ),
           CustumButton(
@@ -327,9 +336,13 @@ class _CronometroViewState extends State<CronometroView> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CustumButton(
-                  color: const Color.fromARGB(255, 235, 212, 0),
+                  color: interObj.userWantsInterval
+                      ? const Color.fromARGB(255, 107, 107, 107)
+                      : const Color.fromARGB(255, 235, 212, 0),
                   onPress: () {
-                    Navigator.of(context).pushNamed(intervaladaRoute);
+                    interObj.userWantsInterval
+                        ? (_) => {}
+                        : Navigator.of(context).pushNamed(intervaladaRoute);
                   },
                   label: 'Intervalada',
                   icon: const Icon(Icons.settings),

@@ -20,6 +20,14 @@ class IntervaladaProvider {
     _holdTime += value;
   }
 
+  void resetInterval() {
+    _repeat = 0;
+    _walkTime = 0;
+    _runTime = 0;
+    _holdTime = 0;
+    _intervalsIsOn = false;
+  }
+
   bool get userWantsInterval => _intervalsIsOn;
   void initializeIntervalada(
       {required int r,
@@ -35,6 +43,8 @@ class IntervaladaProvider {
     print(_walkTime);
     print(_runTime);
   }
+
+  bool get intervalType => _nextVibrationType;
 
   void walkLoop() {
     Vibration.vibrate(duration: 1400);
