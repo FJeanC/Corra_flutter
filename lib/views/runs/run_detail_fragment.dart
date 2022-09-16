@@ -20,7 +20,11 @@ class _RunDetailViewState extends State<RunDetailView> {
   File? fileImage;
   UploadTask? uploadTask;
   bool showSaveButton = false;
+
   Future<void> uploadFile(CloudRun run) async {
+    if (fileImage == null) {
+      return showErrorDialog(context, "Couldn't save image");
+    }
     try {
       final pathToSave = 'runs_image/${run.documentId}';
       final fileToUpload = (File(fileImage!.path));
@@ -34,9 +38,11 @@ class _RunDetailViewState extends State<RunDetailView> {
       setState(() {
         uploadTask = null;
       });
+      var snackBar = const SnackBar(content: Text('Image saved'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } on Exception catch (_) {
       print("I am an exception");
-      showErrorDialog(context, "Couldn't save image");
+      return showErrorDialog(context, "Couldn't save image");
     }
   }
 
