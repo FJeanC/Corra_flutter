@@ -58,7 +58,7 @@ class RunListView extends StatelessWidget {
               );
             },
             title: Text(
-              run.data.substring(0, 10),
+              run.data.substring(0, 10).replaceAll("-", "/"),
               maxLines: 1,
               softWrap: true,
               overflow: TextOverflow.ellipsis,
