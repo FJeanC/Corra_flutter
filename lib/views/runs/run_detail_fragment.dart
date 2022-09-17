@@ -161,7 +161,7 @@ class _RunDetailViewState extends State<RunDetailView> {
         Container(
           margin: const EdgeInsets.only(bottom: 15),
           child: Text(
-            run.data.substring(0, 10),
+            run.data.substring(0, 10).replaceAll("-", "/"),
             style: const TextStyle(fontSize: 20),
           ),
         ),
