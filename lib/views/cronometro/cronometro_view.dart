@@ -316,7 +316,7 @@ class _CronometroViewState extends State<CronometroView> {
               ),
             ),
             child: Text(
-              '${AppLocalizations.of(context)!.interval}: ${intervalNameType ?? AppLocalizations.of(context)!.walking}',
+              '${AppLocalizations.of(context)!.interval}: ${interObj.userWantsInterval ? (intervalNameType ?? AppLocalizations.of(context)!.walking) : AppLocalizations.of(context)!.disabled},',
               textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Color.fromARGB(255, 28, 17, 17), fontSize: 40),
@@ -421,18 +421,3 @@ class CustumButton extends StatelessWidget {
     );
   }
 }
-
-
-
-          // StreamBuilder<double?>(
-          //   stream: _paceUpdatedStreamController.stream,
-          //   initialData: 0,
-          //   builder: (context, snapshot) {
-          //     if (!showPlayButton) {
-          //       print('Pace ${snapshot.data}');
-          //       return Text(
-          //           'Pace: ${snapshot.data!.toStringAsFixed(1)} min/km');
-          //     }
-          //     return const Text('Pace: 0.0 min/km');
-          //   },
-          // ),

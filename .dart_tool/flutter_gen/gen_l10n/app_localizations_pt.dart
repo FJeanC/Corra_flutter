@@ -174,4 +174,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get imageSaved => 'Imagem Salva';
+
+  @override
+  String get disabled => 'Desligado';
 }

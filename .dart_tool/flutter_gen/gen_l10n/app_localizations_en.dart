@@ -174,4 +174,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get imageSaved => 'Image Saved';
+
+  @override
+  String get disabled => 'Off';
 }

@@ -54,5 +54,6 @@
     "distance" : "Distância",
     "startTime" : "Início",
     "couldntSaveImage" : "Não foi possível salvar a imagem",
-    "imageSaved" : "Imagem Salva"
+    "imageSaved" : "Imagem Salva",
+    "disabled" : "Desligado"
 }

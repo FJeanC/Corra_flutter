@@ -18,19 +18,20 @@ class RunListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int count = runs.length + 1;
+    //int count = runs.length + 1;
     return ListView.builder(
       itemCount: runs.length,
       itemBuilder: (context, index) {
+        int invertedIndex = runs.length - 1 - index;
         final run = runs.elementAt(index);
-        count--;
+        //count--;
         return Card(
           elevation: 1,
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: const Color.fromARGB(255, 102, 200, 217),
               child: Text(
-                '$count',
+                '${invertedIndex + 1}',
                 style: const TextStyle(color: Colors.black),
               ),
             ),
