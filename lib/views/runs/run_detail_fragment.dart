@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:corra/enums/menu_action.dart';
 import 'package:corra/services/cloud/cloud_run.dart';
 import 'package:corra/utilities/dialogs/error_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -23,7 +22,8 @@ class _RunDetailViewState extends State<RunDetailView> {
 
   Future<void> uploadFile(CloudRun run) async {
     if (fileImage == null) {
-      return showErrorDialog(context, "Couldn't save image");
+      return showErrorDialog(
+          context, AppLocalizations.of(context)!.couldntSaveImage);
     }
     try {
       final pathToSave = 'runs_image/${run.documentId}';
@@ -38,11 +38,13 @@ class _RunDetailViewState extends State<RunDetailView> {
       setState(() {
         uploadTask = null;
       });
-      var snackBar = const SnackBar(content: Text('Image saved'));
+      var snackBar =
+          SnackBar(content: Text(AppLocalizations.of(context)!.imageSaved));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } on Exception catch (_) {
       print("I am an exception");
-      return showErrorDialog(context, "Couldn't save image");
+      return showErrorDialog(
+          context, AppLocalizations.of(context)!.couldntSaveImage);
     }
   }
 
@@ -80,7 +82,7 @@ class _RunDetailViewState extends State<RunDetailView> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.detailView),
         actions: [
-          IconButton(onPressed: pickImage, icon: const Icon(Icons.camera)),
+          IconButton(onPressed: pickImage, icon: const Icon(Icons.camera_alt)),
           IconButton(
               onPressed: () => uploadFile(run), icon: const Icon(Icons.save)),
         ],
@@ -153,9 +155,9 @@ class _RunDetailViewState extends State<RunDetailView> {
       children: [
         Padding(
           padding: EdgeInsets.only(top: isHeightLarge ? 32 : 16, bottom: 10),
-          child: const Text(
-            'Run From',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+          child: Text(
+            AppLocalizations.of(context)!.runFrom,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
           ),
         ),
         Container(
@@ -175,8 +177,8 @@ class _RunDetailViewState extends State<RunDetailView> {
               child: Flex(
                 direction: isHeightLarge ? Axis.vertical : Axis.horizontal,
                 children: [
-                  const Text(
-                    'Distance',
+                  Text(
+                    AppLocalizations.of(context)!.distance,
                     style: TextStyle(fontSize: 15),
                   ),
                   Padding(
@@ -215,9 +217,9 @@ class _RunDetailViewState extends State<RunDetailView> {
               ),
               Column(
                 children: [
-                  const Text(
-                    'Start Time',
-                    style: TextStyle(fontSize: 24),
+                  Text(
+                    AppLocalizations.of(context)!.startTime,
+                    style: const TextStyle(fontSize: 24),
                   ),
                   Text(
                     run.data.substring(11, 19),

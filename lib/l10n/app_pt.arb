@@ -49,5 +49,10 @@
     "run" : "Corrida",
     "interval" : "Intervalo",
     "walking": "Andando",
-    "running" : "Correndo"
+    "running" : "Correndo",
+    "runFrom" : "Data",
+    "distance" : "Distância",
+    "startTime" : "Início",
+    "couldntSaveImage" : "Não foi possível salvar a imagem",
+    "imageSaved" : "Imagem Salva"
 }

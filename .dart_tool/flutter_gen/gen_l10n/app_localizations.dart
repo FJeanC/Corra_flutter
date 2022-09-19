@@ -399,6 +399,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Running'**
   String get running;
+
+  /// No description provided for @runFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Run From'**
+  String get runFrom;
+
+  /// No description provided for @distance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get distance;
+
+  /// No description provided for @startTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Time'**
+  String get startTime;
+
+  /// No description provided for @couldntSaveImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save Image'**
+  String get couldntSaveImage;
+
+  /// No description provided for @imageSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Image Saved'**
+  String get imageSaved;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

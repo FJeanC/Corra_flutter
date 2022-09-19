@@ -159,4 +159,19 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get running => 'Correndo';
+
+  @override
+  String get runFrom => 'Data';
+
+  @override
+  String get distance => 'Distância';
+
+  @override
+  String get startTime => 'Início';
+
+  @override
+  String get couldntSaveImage => 'Não foi possível salvar a imagem';
+
+  @override
+  String get imageSaved => 'Imagem Salva';
 }

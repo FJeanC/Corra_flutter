@@ -159,4 +159,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get running => 'Running';
+
+  @override
+  String get runFrom => 'Run From';
+
+  @override
+  String get distance => 'Distance';
+
+  @override
+  String get startTime => 'Start Time';
+
+  @override
+  String get couldntSaveImage => 'Couldn\'t save Image';
+
+  @override
+  String get imageSaved => 'Image Saved';
 }

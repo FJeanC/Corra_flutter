@@ -49,6 +49,11 @@
     "run" : "Run",
     "interval" : "Interval",
     "walking": "Walking",
-    "running" : "Running"
+    "running" : "Running",
+    "runFrom" : "Run From",
+    "distance" : "Distance",
+    "startTime" : "Start Time",
+    "couldntSaveImage" : "Couldn't save Image",
+    "imageSaved" : "Image Saved"
 
 }
