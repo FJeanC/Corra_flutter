@@ -1,4 +1,5 @@
 import 'package:vibration/vibration.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntervaladaProvider {
   static final IntervaladaProvider _shared =
@@ -15,11 +16,13 @@ class IntervaladaProvider {
   bool _intervalsIsOn = false;
   final pattern = [0, 1000, 300, 1000];
 
-  int get getRepeat => _repeat;
   set addTime(int value) {
     _holdTime += value;
   }
 
+  int get getRepeat => _repeat;
+  bool get userWantsInterval => _intervalsIsOn;
+  bool get intervalType => _nextVibrationType;
   void resetInterval() {
     _repeat = 0;
     _walkTime = 0;
@@ -28,23 +31,23 @@ class IntervaladaProvider {
     _intervalsIsOn = false;
   }
 
-  bool get userWantsInterval => _intervalsIsOn;
-  void initializeIntervalada(
-      {required int r,
-      required int wT,
-      required int rT,
-      required bool interval}) {
-    _repeat = r;
-    _walkTime = wT;
-    _runTime = rT;
-    _holdTime = 0;
+  void initialize({required bool interval}) async {
+    print("I am here bitches");
     _intervalsIsOn = interval;
-    print(_repeat);
-    print(_walkTime);
-    print(_runTime);
+    final prefs = await SharedPreferences.getInstance();
+    _repeat = prefs.getInt('repeat') ?? 0;
+    _walkTime = prefs.getInt('walk') ?? 0;
+    _runTime = prefs.getInt('run') ?? 0;
+    _holdTime = 0;
   }
 
-  bool get intervalType => _nextVibrationType;
+  void disposeprefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('repeat');
+    await prefs.remove('walk');
+    await prefs.remove('run');
+    print('Disposed');
+  }
 
   void walkLoop() {
     Vibration.vibrate(duration: 1400);

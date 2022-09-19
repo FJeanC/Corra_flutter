@@ -48,7 +48,8 @@ class _CronometroViewState extends State<CronometroView> {
 
   //Intervalada variables
   final interObj = IntervaladaProvider();
-  late String intervalNameType;
+  String? intervalNameType;
+  bool walking = true;
   //TTS variables
   final _ttsObj = TTS();
   double auxTTS = 1;
@@ -89,15 +90,28 @@ class _CronometroViewState extends State<CronometroView> {
 
   void handleIntervalada() {
     interObj.addTime = 1;
+
     bool aux = interObj.intervalType;
     interObj.handleRepetion();
-
+    print("I have a pen");
     if (aux != interObj.intervalType) {
+      print("I have an apple");
+      print('Interval name type: $intervalNameType');
+      print(intervalNameType == AppLocalizations.of(context)!.walking);
+      print("AUX ${aux}");
       setState(() {
-        intervalNameType =
-            (intervalNameType == AppLocalizations.of(context)!.walking)
-                ? AppLocalizations.of(context)!.running
-                : AppLocalizations.of(context)!.walking;
+        // intervalNameType =
+        //     (intervalNameType == AppLocalizations.of(context)!.walking)
+        //         ? AppLocalizations.of(context)!.running
+        //         : AppLocalizations.of(context)!.walking;
+        if (intervalNameType == null ||
+            intervalNameType == AppLocalizations.of(context)!.walking) {
+          print("è true da true man");
+          intervalNameType = AppLocalizations.of(context)!.running;
+        } else {
+          print("è false da false  da true man");
+          intervalNameType = AppLocalizations.of(context)!.walking;
+        }
       });
     }
     if (interObj.getRepeat == 0) {
@@ -302,7 +316,7 @@ class _CronometroViewState extends State<CronometroView> {
               ),
             ),
             child: Text(
-              '${AppLocalizations.of(context)!.interval}: ${AppLocalizations.of(context)!.walking}',
+              '${AppLocalizations.of(context)!.interval}: ${intervalNameType ?? AppLocalizations.of(context)!.walking}',
               textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Color.fromARGB(255, 28, 17, 17), fontSize: 40),
@@ -368,6 +382,7 @@ class _CronometroViewState extends State<CronometroView> {
               );
               print(DateTime.now().toString());
               // Callback para mudar o view para a run list view
+              interObj.disposeprefs();
               widget.onSaveChangeNavBar();
             },
             label: 'Save',
