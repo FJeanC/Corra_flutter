@@ -33,9 +33,9 @@
     "takePic" : "Take a picture",
     "intevals" : "Intervals",
     "activateIntervals" : "Activate Intervals",
-    "enterWalkTime" : "Enter walk time",
-    "enterRunTime" : "Enter run time",
-    "enterRepeat" : "Enter repeat",
+    "enterWalkTime" : "Interval Time: Walk",
+    "enterRunTime" : "Interval Time: Run",
+    "enterRepeat" : "Enter number of repetion",
     "passwordReset" : "Password Reset",
     "linkEmailForInformation" : "We have sent you a password reset link. Please check your email for more information.",
     "sureLogout" : "Are you sure you want to log out?",
@@ -47,5 +47,8 @@
     "ttsPhrase" : "You've ran one kilometer",
     "yourRuns" : "Your runs",
     "run" : "Run",
-    "interval" : "Interval"
+    "interval" : "Interval",
+    "walking": "Walking",
+    "running" : "Running"
+
 }

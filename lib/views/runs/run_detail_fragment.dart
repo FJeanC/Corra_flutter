@@ -138,7 +138,7 @@ class _RunDetailViewState extends State<RunDetailView> {
         ((getTimeInMilli(run.tempo) / 3600000)));
     double pace = 1 / (double.parse(run.velocidade) / 60);
     print("I AM PACE!!!! $pace");
-    if (pace < 60 || pace == double.infinity) {
+    if (pace == double.infinity) {
       pace = 0.0;
     }
 

@@ -33,9 +33,9 @@
     "takePic" : "Tire uma foto",
     "intevals" : "Intervalada",
     "activateIntervals" : "Ativar Intervalada",
-    "enterWalkTime" : "Tempo para andar",
-    "enterRunTime" : "Tempo para correr",
-    "enterRepeat" : "Entre repetições",
+    "enterWalkTime" : "Tempo do Intervalo: Andar",
+    "enterRunTime" : "Tempo do Intervalo: Correr",
+    "enterRepeat" : "Entre número de repetições",
     "passwordReset" : "Resete sua senha",
     "linkEmailForInformation" : "Mandamos um link para resetar sua senha. Por favor verfique seu email para mais informações.",
     "sureLogout" : "Você tem certeza que deseja sair?",
@@ -47,5 +47,7 @@
     "ttsPhrase" : "Você correu um quilômetro",
     "yourRuns" : "Suas corridas",
     "run" : "Corrida",
-    "interval" : "Intervalo"
+    "interval" : "Intervalo",
+    "walking": "Andando",
+    "running" : "Correndo"
 }

@@ -110,13 +110,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get activateIntervals => 'Ativar Intervalada';
 
   @override
-  String get enterWalkTime => 'Tempo para andar';
+  String get enterWalkTime => 'Tempo do Intervalo: Andar';
 
   @override
-  String get enterRunTime => 'Tempo para correr';
+  String get enterRunTime => 'Tempo do Intervalo: Correr';
 
   @override
-  String get enterRepeat => 'Entre repetições';
+  String get enterRepeat => 'Entre número de repetições';
 
   @override
   String get passwordReset => 'Resete sua senha';
@@ -153,4 +153,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get interval => 'Intervalo';
+
+  @override
+  String get walking => 'Andando';
+
+  @override
+  String get running => 'Correndo';
 }

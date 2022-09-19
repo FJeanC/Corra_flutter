@@ -110,13 +110,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get activateIntervals => 'Activate Intervals';
 
   @override
-  String get enterWalkTime => 'Enter walk time';
+  String get enterWalkTime => 'Interval Time: Walk';
 
   @override
-  String get enterRunTime => 'Enter run time';
+  String get enterRunTime => 'Interval Time: Run';
 
   @override
-  String get enterRepeat => 'Enter repeat';
+  String get enterRepeat => 'Enter number of repetion';
 
   @override
   String get passwordReset => 'Password Reset';
@@ -153,4 +153,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get interval => 'Interval';
+
+  @override
+  String get walking => 'Walking';
+
+  @override
+  String get running => 'Running';
 }

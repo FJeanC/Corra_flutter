@@ -48,7 +48,7 @@ class _CronometroViewState extends State<CronometroView> {
 
   //Intervalada variables
   final interObj = IntervaladaProvider();
-  String intervalNameType = 'Walking';
+  late String intervalNameType;
   //TTS variables
   final _ttsObj = TTS();
   double auxTTS = 1;
@@ -95,7 +95,9 @@ class _CronometroViewState extends State<CronometroView> {
     if (aux != interObj.intervalType) {
       setState(() {
         intervalNameType =
-            (intervalNameType == 'Walking') ? 'Running' : 'Walking';
+            (intervalNameType == AppLocalizations.of(context)!.walking)
+                ? AppLocalizations.of(context)!.running
+                : AppLocalizations.of(context)!.walking;
       });
     }
     if (interObj.getRepeat == 0) {
@@ -300,7 +302,7 @@ class _CronometroViewState extends State<CronometroView> {
               ),
             ),
             child: Text(
-              '${AppLocalizations.of(context)!.interval}: $intervalNameType',
+              '${AppLocalizations.of(context)!.interval}: ${AppLocalizations.of(context)!.walking}',
               textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Color.fromARGB(255, 28, 17, 17), fontSize: 40),

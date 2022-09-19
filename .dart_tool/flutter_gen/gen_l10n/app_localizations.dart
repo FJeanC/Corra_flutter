@@ -301,19 +301,19 @@ abstract class AppLocalizations {
   /// No description provided for @enterWalkTime.
   ///
   /// In en, this message translates to:
-  /// **'Enter walk time'**
+  /// **'Interval Time: Walk'**
   String get enterWalkTime;
 
   /// No description provided for @enterRunTime.
   ///
   /// In en, this message translates to:
-  /// **'Enter run time'**
+  /// **'Interval Time: Run'**
   String get enterRunTime;
 
   /// No description provided for @enterRepeat.
   ///
   /// In en, this message translates to:
-  /// **'Enter repeat'**
+  /// **'Enter number of repetion'**
   String get enterRepeat;
 
   /// No description provided for @passwordReset.
@@ -387,6 +387,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Interval'**
   String get interval;
+
+  /// No description provided for @walking.
+  ///
+  /// In en, this message translates to:
+  /// **'Walking'**
+  String get walking;
+
+  /// No description provided for @running.
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get running;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
