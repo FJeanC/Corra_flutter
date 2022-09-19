@@ -179,7 +179,7 @@ class _RunDetailViewState extends State<RunDetailView> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.distance,
-                    style: TextStyle(fontSize: 15),
+                    style: const TextStyle(fontSize: 15),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),

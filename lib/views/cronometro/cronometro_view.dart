@@ -316,7 +316,7 @@ class _CronometroViewState extends State<CronometroView> {
               ),
             ),
             child: Text(
-              '${AppLocalizations.of(context)!.interval}: ${interObj.userWantsInterval ? (intervalNameType ?? AppLocalizations.of(context)!.walking) : AppLocalizations.of(context)!.disabled},',
+              '${AppLocalizations.of(context)!.interval}: ${interObj.userWantsInterval ? (intervalNameType ?? AppLocalizations.of(context)!.walking) : AppLocalizations.of(context)!.disabled}',
               textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Color.fromARGB(255, 28, 17, 17), fontSize: 40),
