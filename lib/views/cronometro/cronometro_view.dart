@@ -50,6 +50,7 @@ class _CronometroViewState extends State<CronometroView> {
   final interObj = IntervaladaProvider();
   String? intervalNameType;
   bool walking = true;
+
   //TTS variables
   final _ttsObj = TTS();
   double auxTTS = 1;
@@ -100,10 +101,6 @@ class _CronometroViewState extends State<CronometroView> {
       print(intervalNameType == AppLocalizations.of(context)!.walking);
       print("AUX ${aux}");
       setState(() {
-        // intervalNameType =
-        //     (intervalNameType == AppLocalizations.of(context)!.walking)
-        //         ? AppLocalizations.of(context)!.running
-        //         : AppLocalizations.of(context)!.walking;
         if (intervalNameType == null ||
             intervalNameType == AppLocalizations.of(context)!.walking) {
           print("è true da true man");
@@ -129,9 +126,6 @@ class _CronometroViewState extends State<CronometroView> {
     _stopWatchTimer = StopWatchTimer();
     _runsSerivce = FirebaseCloudRunStorage();
 
-    // _velocityUpdatedStreamController.add(0);
-    // _distanceUpdatedStreamContoller.add(0);
-    // _paceUpdatedStreamController.add(0);
     locator
         .getPositionStream(
           locationSettings: const LocationSettings(
@@ -294,9 +288,6 @@ class _CronometroViewState extends State<CronometroView> {
                     },
                   ),
                 ),
-                // const SizedBox(
-                //   width: 50,
-                // ),
                 Expanded(
                   child: Text(
                     'Pace: ${pace.toStringAsFixed(2)}',

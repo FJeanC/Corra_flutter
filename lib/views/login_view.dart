@@ -43,10 +43,14 @@ class _LoginViewState extends State<LoginView> {
             );
           } else if (state.exception is WrongPasswordAuthException) {
             await showErrorDialog(
-                context, AppLocalizations.of(context)!.wrongCredentials);
+              context,
+              AppLocalizations.of(context)!.wrongCredentials,
+            );
           } else if (state.exception is GenericAuthException) {
             await showErrorDialog(
-                context, AppLocalizations.of(context)!.authenticationError);
+              context,
+              AppLocalizations.of(context)!.authenticationError,
+            );
           }
         }
       },
@@ -84,6 +88,7 @@ class _LoginViewState extends State<LoginView> {
                         AuthEventLogIn(
                           email,
                           password,
+                          context,
                         ),
                       );
                 },

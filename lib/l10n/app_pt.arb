@@ -55,5 +55,6 @@
     "startTime" : "Início",
     "couldntSaveImage" : "Não foi possível salvar a imagem",
     "imageSaved" : "Imagem Salva",
-    "disabled" : "Desligado"
+    "disabled" : "Desligado",
+    "waitLogin" : "Por favor, espere quanto o login está sendo realizado"
 }

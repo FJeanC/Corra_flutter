@@ -177,4 +177,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get disabled => 'Off';
+
+  @override
+  String get waitLogin => 'Please wait while I log you in';
 }

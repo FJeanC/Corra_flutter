@@ -435,6 +435,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Off'**
   String get disabled;
+
+  /// No description provided for @waitLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait while I log you in'**
+  String get waitLogin;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

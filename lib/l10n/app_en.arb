@@ -55,6 +55,7 @@
     "startTime" : "Start Time",
     "couldntSaveImage" : "Couldn't save Image",
     "imageSaved" : "Image Saved",
-    "disabled" : "Off"
+    "disabled" : "Off",
+    "waitLogin" : "Please wait while I log you in"
 
 }

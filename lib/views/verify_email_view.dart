@@ -20,8 +20,21 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
       ),
       body: Column(
         children: [
-          Text(AppLocalizations.of(context)!.sendEmail),
-          Text(AppLocalizations.of(context)!.emailWasNotSent),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              AppLocalizations.of(context)!.sendEmail,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 20, bottom: 2, left: 20, right: 20),
+            child: Text(
+              AppLocalizations.of(context)!.emailWasNotSent,
+              style: const TextStyle(fontSize: 13),
+            ),
+          ),
           TextButton(
             onPressed: () {
               context.read<AuthBloc>().add(
@@ -30,13 +43,14 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             },
             child: Text(AppLocalizations.of(context)!.sendEmailVerification),
           ),
-          TextButton(
-              onPressed: () async {
-                context.read<AuthBloc>().add(
-                      const AuthEventLogOut(),
-                    );
-              },
-              child: Text(AppLocalizations.of(context)!.back))
+          ElevatedButton(
+            onPressed: () async {
+              context.read<AuthBloc>().add(
+                    const AuthEventLogOut(),
+                  );
+            },
+            child: Text(AppLocalizations.of(context)!.back),
+          )
         ],
       ),
     );

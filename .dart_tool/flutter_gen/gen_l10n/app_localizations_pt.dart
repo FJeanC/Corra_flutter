@@ -177,4 +177,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get disabled => 'Desligado';
+
+  @override
+  String get waitLogin => 'Por favor, espere quanto o login está sendo realizado';
 }
