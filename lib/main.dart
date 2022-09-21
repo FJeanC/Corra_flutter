@@ -53,11 +53,14 @@ class NoPermissionApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('No permission'),
-          backgroundColor: Colors.amber,
+          title: const Text('Permission denied'),
+          backgroundColor: Colors.blue,
         ),
         body: const Center(
-          child: Text('Sem permissao menor'),
+          child: Text(
+            "Clear data of your app and accept permission",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
       ),
     );

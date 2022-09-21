@@ -180,4 +180,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get waitLogin => 'Por favor, espere quanto o login está sendo realizado';
+
+  @override
+  String get noPermission => 'Sem permissao';
+
+  @override
+  String get permissionMessage => 'Você recusou a permissão requerida para rodar o app. Se você recusou, limpe os dados do app e tente novamente';
 }

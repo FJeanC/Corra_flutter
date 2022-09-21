@@ -42,7 +42,6 @@ class _RunDetailViewState extends State<RunDetailView> {
           SnackBar(content: Text(AppLocalizations.of(context)!.imageSaved));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } on Exception catch (_) {
-      print("I am an exception");
       return showErrorDialog(
           context, AppLocalizations.of(context)!.couldntSaveImage);
     }
@@ -53,10 +52,8 @@ class _RunDetailViewState extends State<RunDetailView> {
       final pathToSave = 'runs_image/${run.documentId}';
       final ref = FirebaseStorage.instance.ref().child(pathToSave);
       final result = await ref.getDownloadURL();
-      print("IM not being called");
       return result;
     } on FirebaseException catch (e) {
-      print('HERE I AM ou ${e.code} and ${e.message}');
       return e.code;
     }
   }
@@ -70,8 +67,8 @@ class _RunDetailViewState extends State<RunDetailView> {
       setState(() {
         fileImage = imageTemporary;
       });
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
+    } on PlatformException catch (_) {
+      return;
     }
   }
 
@@ -106,11 +103,8 @@ class _RunDetailViewState extends State<RunDetailView> {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
             if (snapshot.data! != 'object-not-found') {
-              print('AQUI');
-              //flag = true;
               return buildImage(snapshot.data!);
             } else {
-              print("Hello darksness");
               return Image.asset('assets/images/Shoe.png');
             }
           default:
@@ -121,10 +115,6 @@ class _RunDetailViewState extends State<RunDetailView> {
   }
 
   Widget buildImageInMemory() {
-    setState(() {
-      showSaveButton = true;
-      print("Show save : $showSaveButton");
-    });
     return Container(
       decoration: BoxDecoration(border: Border.all(width: 4)),
       child: Image.file(
@@ -139,18 +129,11 @@ class _RunDetailViewState extends State<RunDetailView> {
     final distancia = (double.parse(run.velocidade) *
         ((getTimeInMilli(run.tempo) / 3600000)));
     double pace = 1 / (double.parse(run.velocidade) / 60);
-    print("I AM PACE!!!! $pace");
     if (pace == double.infinity) {
       pace = 0.0;
     }
 
     bool isHeightLarge = MediaQuery.of(context).size.height >= 810;
-    print('Is height large? $isHeightLarge');
-
-    print('dividido por: ${getTimeInMilli(run.tempo) / 3600000}');
-    print('Run.velocidade ${run.velocidade}');
-    print('GetMili: ${getTimeInMilli(run.tempo)}');
-    print('Distancia: $distancia');
     return Column(
       children: [
         Padding(
@@ -237,7 +220,12 @@ class _RunDetailViewState extends State<RunDetailView> {
   Widget buildImage(String documentName) {
     return Center(
       child: Container(
-        decoration: BoxDecoration(border: Border.all(width: 4)),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 4,
+            color: const Color.fromARGB(255, 0, 0, 0),
+          ),
+        ),
         child: Image.network(
           documentName,
           fit: BoxFit.cover,
@@ -264,40 +252,6 @@ class _RunDetailViewState extends State<RunDetailView> {
     final timeStr = globalTime;
     final format = DateFormat('HH:mm:ss.S');
     final dt = format.parse(timeStr, true);
-    print('MILLIE: ${dt.millisecondsSinceEpoch}');
     return dt.millisecondsSinceEpoch;
   }
 }
-
-
-
-// CustomPaint(
-//           child: Container(
-//             // width: 250,
-//             // height: 130,
-//             color: const Color.fromARGB(255, 60, 234, 253),
-//             child: Padding(
-//               padding: const EdgeInsets.all(20),
-//               child: Column(
-//                 children: [
-//                   const Text(
-//                     'Distance',
-//                     style: TextStyle(fontSize: 15),
-//                   ),
-//                   Padding(
-//                     padding: const EdgeInsets.all(10),
-//                     child: Text(
-//                       '${distancia.toStringAsFixed(2)} KM',
-//                       style: const TextStyle(
-//                           fontSize: 25, fontWeight: FontWeight.bold),
-//                     ),
-//                   ),
-//                   Text(
-//                     run.tempo,
-//                     style: const TextStyle(fontSize: 20),
-//                   )
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),

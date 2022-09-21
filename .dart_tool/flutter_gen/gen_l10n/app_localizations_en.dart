@@ -180,4 +180,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get waitLogin => 'Please wait while I log you in';
+
+  @override
+  String get noPermission => 'No permission';
+
+  @override
+  String get permissionMessage => 'You need to accept the permissions required to run the app. If you have denied, clear the data of the app and try again';
 }

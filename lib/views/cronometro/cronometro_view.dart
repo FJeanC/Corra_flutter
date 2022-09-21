@@ -73,7 +73,6 @@ class _CronometroViewState extends State<CronometroView> {
     final timeStr = globalTime;
     final format = DateFormat('HH:mm:ss.S');
     final dt = format.parse(timeStr, true);
-    print('MILLIE: ${dt.millisecondsSinceEpoch}');
     return dt.millisecondsSinceEpoch;
   }
 
@@ -82,7 +81,6 @@ class _CronometroViewState extends State<CronometroView> {
       (Position updatedPosition) {
         if (!showPlayButton) {
           _velocity = (speed + updatedPosition.speed) / 2;
-          print('VELOCITY HERE: ${_velocity.toStringAsFixed(2)}');
           calculateAverageSpeed(_velocity);
         }
       },
@@ -94,19 +92,12 @@ class _CronometroViewState extends State<CronometroView> {
 
     bool aux = interObj.intervalType;
     interObj.handleRepetion();
-    print("I have a pen");
     if (aux != interObj.intervalType) {
-      print("I have an apple");
-      print('Interval name type: $intervalNameType');
-      print(intervalNameType == AppLocalizations.of(context)!.walking);
-      print("AUX ${aux}");
       setState(() {
         if (intervalNameType == null ||
             intervalNameType == AppLocalizations.of(context)!.walking) {
-          print("è true da true man");
           intervalNameType = AppLocalizations.of(context)!.running;
         } else {
-          print("è false da false  da true man");
           intervalNameType = AppLocalizations.of(context)!.walking;
         }
       });
@@ -144,8 +135,6 @@ class _CronometroViewState extends State<CronometroView> {
           if (interObj.userWantsInterval) {
             handleIntervalada();
           }
-          print('Count: $count');
-
           if (count % 3 == 0 && !showPlayButton) {
             velocidades.add(averageSpeed);
             final dist = (velocidades.average) * (getTimeInMilli() / 3600000);
@@ -154,7 +143,6 @@ class _CronometroViewState extends State<CronometroView> {
                 name: 'onAccelerate');
             _distanceUpdatedStreamContoller.add(dist);
             if (_velocity * 3.6 < 2) {
-              print('Im here');
               _velocityUpdatedStreamController.add(0);
             } else {
               _velocityUpdatedStreamController.add(_velocity * 3.6);
@@ -167,7 +155,6 @@ class _CronometroViewState extends State<CronometroView> {
             }
 
             if (dist >= auxTTS) {
-              print('SHOULD SPEAK');
               _ttsObj.speak(context);
               auxTTS += 1;
             }
@@ -248,11 +235,6 @@ class _CronometroViewState extends State<CronometroView> {
                     stream: _distanceUpdatedStreamContoller.stream,
                     initialData: 0.0,
                     builder: (context, snapshot) {
-                      if (!showPlayButton) {
-                        //distance += (snapshot.data!);
-                        print(
-                            'I am here  ${snapshot.data!.toStringAsFixed(2)}');
-                      }
                       return Text(
                         'Dist: ${snapshot.data!.toStringAsFixed(2)}',
                         style: const TextStyle(
@@ -274,7 +256,6 @@ class _CronometroViewState extends State<CronometroView> {
                     stream: _velocityUpdatedStreamController.stream,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        print((snapshot.data!).toStringAsPrecision(2));
                         return Text(
                           '${(snapshot.data!).toStringAsPrecision(2)} KM/H',
                           style: const TextStyle(fontSize: 27),
@@ -371,7 +352,6 @@ class _CronometroViewState extends State<CronometroView> {
                 data: DateTime.now()
                     .toString(), // 0 - 10 é a data  12 a 19 horario
               );
-              print(DateTime.now().toString());
               // Callback para mudar o view para a run list view
               interObj.disposeprefs();
               widget.onSaveChangeNavBar();

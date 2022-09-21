@@ -161,11 +161,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           exception = e;
           didSendEmail = false;
         }
-        emit(AuthStateForgotPassword(
-          exception: exception,
-          hasSentEmail: didSendEmail,
-          isLoading: false,
-        ));
+        emit(
+          AuthStateForgotPassword(
+            exception: exception,
+            hasSentEmail: didSendEmail,
+            isLoading: false,
+          ),
+        );
       },
     );
 

@@ -441,6 +441,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please wait while I log you in'**
   String get waitLogin;
+
+  /// No description provided for @noPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'No permission'**
+  String get noPermission;
+
+  /// No description provided for @permissionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You need to accept the permissions required to run the app. If you have denied, clear the data of the app and try again'**
+  String get permissionMessage;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

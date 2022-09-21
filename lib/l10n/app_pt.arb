@@ -56,5 +56,7 @@
     "couldntSaveImage" : "Não foi possível salvar a imagem",
     "imageSaved" : "Imagem Salva",
     "disabled" : "Desligado",
-    "waitLogin" : "Por favor, espere quanto o login está sendo realizado"
-}
+    "waitLogin" : "Por favor, espere quanto o login está sendo realizado",
+    "noPermission" : "Sem permissao",
+    "permissionMessage" :  "Você recusou a permissão requerida para rodar o app. Se você recusou, limpe os dados do app e tente novamente"
+}                          

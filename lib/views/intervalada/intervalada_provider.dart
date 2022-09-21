@@ -32,7 +32,6 @@ class IntervaladaProvider {
   }
 
   void initialize({required bool interval}) async {
-    print("I am here bitches");
     _intervalsIsOn = interval;
     final prefs = await SharedPreferences.getInstance();
     _repeat = prefs.getInt('repeat') ?? 0;
@@ -46,7 +45,6 @@ class IntervaladaProvider {
     await prefs.remove('repeat');
     await prefs.remove('walk');
     await prefs.remove('run');
-    print('Disposed');
   }
 
   void walkLoop() {
@@ -60,7 +58,6 @@ class IntervaladaProvider {
   }
 
   void handleRepetion() {
-    print('HoldTIme: $_holdTime');
     if (_nextVibrationType && _holdTime % _walkTime == 0) {
       runLoop();
       _holdTime = 0;

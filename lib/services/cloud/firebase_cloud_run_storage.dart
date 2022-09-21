@@ -23,7 +23,6 @@ class FirebaseCloudRunStorage {
       velocidadeFieldName: velocidade,
       dataFieldName: data,
     });
-    print('Nota criada: $tempo, $ownerUserId');
   }
 
   Future<void> deleteRun({required String documentId}) async {
@@ -37,13 +36,11 @@ class FirebaseCloudRunStorage {
           FirebaseStorage.instance.ref().child('runs_image/$documentId');
       await ref.delete();
     } catch (e) {
-      print('Maybe ');
       return;
     }
   }
 
   Stream<Iterable<CloudRun>> allRuns({required String ownerUserId}) {
-    print('I was called');
     return runs.orderBy('data', descending: true).snapshots().map((event) =>
         event.docs
             .map((doc) => CloudRun.fromSnapshot(doc))
